@@ -1,0 +1,13 @@
+.time-prev-container {
+  height: 15rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  background-color: #EFEFEF;
+  border: 1px solid #E1E1E1;
+  border-radius: 5px;
+}
+
+.time {
+  padding: 0.5rem 0.8rem;
+  color: #5f5d5d;
+}
