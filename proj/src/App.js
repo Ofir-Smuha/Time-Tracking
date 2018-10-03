@@ -10,25 +10,40 @@ class App extends Component {
   };
 
   componentWillMount() {
-
+    this.renderTimes()
   }
 
-  render() {
-    const today = new moment().add(this.state.offset, 'days');
+  updateOffset = (offset) => {
+    this.setState({
+      offset: this.state.offset + offset
+    }, this.renderTimes)
+  }
+
+  renderTimes = () => {
+    const today = moment().add(this.state.offset, 'days');
     const times = [];
 
     for (let i = 0; i < 7; i++) {
       times.push(
-        today.clone().add(i, 'days').format('DD.MM.YY')
+        today.clone().add(i, 'days').format('MM.DD.YY')
       );
     }
 
-    console.log(times);
+    this.setState({
+      times: times
+    })
+  }
+
+  render() {
 
     return (
       <div className="App">
-        <Header times={times}>Time Tracking</Header>
-        <TimesList times={times}/>
+        <Header 
+          times={this.state.times}
+          updateOffset={this.updateOffset}>
+          Time Tracking
+        </Header>
+        <TimesList times={this.state.times}/>
       </div>
     );
   }
