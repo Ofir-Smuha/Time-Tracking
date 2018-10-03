@@ -1,13 +1,12 @@
 import React from 'react'
 import moment from 'moment'
-import {head, last} from 'lodash/fp'
+import { head, last, get } from 'lodash/fp'
 
 
-export default (props) => {
+const Header = (props) => {
 
-  const startDate = moment(head(props.times)).format('MMM DD, YYYY')
-  const endDate = moment(last(props.times)).format('MMM DD, YYYY');
-
+  const startDate = moment(get('id', head(props.dates))).format('MMM DD, YYYY')
+  const endDate = moment(get('id', last(props.dates))).format('MMM DD, YYYY');
 
   return (
     <div className="header-container">
@@ -22,3 +21,5 @@ export default (props) => {
     </div> 
   )
 }
+
+export default Header

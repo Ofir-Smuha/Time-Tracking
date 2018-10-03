@@ -1,12 +1,21 @@
 import React from 'react'
 import TimePreview from './TimePreview';
+import { get } from 'lodash/fp';
 
-export default (props) => {
+const TimeList = (props) => {
   return (
     <div>
       <ul className="times-container">
-        {props.times.map(time => <TimePreview key={time} time={time}/>)}
+        {props.dates.map(date => 
+        <TimePreview 
+          changeTime={props.changeTime} 
+          key={date.id} 
+          date={date}
+          total={ get(date.id, props.hours) }
+        />)}
       </ul>
     </div>
   )
 }
+
+export default TimeList

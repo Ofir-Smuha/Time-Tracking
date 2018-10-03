@@ -2,36 +2,57 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import TimesList from './components/TimesList';
 import moment from 'moment';
+import {set} from 'lodash/fp'
 
 class App extends Component {
   state = {
     offset: 0,
-    times: []
+    dates: [],
+    hours: {}
   };
 
-  componentWillMount() {
-    this.renderTimes()
+  componentDidMount() {
+    this.renderDates();
+  }
+
+  changeTime = (hoursValue, id) => {
+    // this.setState(prevState => {
+    // const timeIdx = this.state.times.findIndex(time => time.id === id);
+    //   return set(
+    //     prevState,
+    //     this.state.times[timeIdx].id, // this could also be ['users', index, 'job']
+    //     date
+    //   )
+    // },() => console.log('changed',this.state.times));
+    const hours = { ...this.state.hours };
+
+    this.setState({
+      hours: set([id], hoursValue, hours)
+    }, () => console.log('changed', this.state.hours))
   }
 
   updateOffset = (offset) => {
     this.setState({
       offset: this.state.offset + offset
-    }, this.renderTimes)
+    }, this.renderDates)
   }
 
-  renderTimes = () => {
+  renderDates = () => {
     const today = moment().add(this.state.offset, 'days');
-    const times = [];
+    const dates = [];
 
     for (let i = 0; i < 7; i++) {
-      times.push(
-        today.clone().add(i, 'days').format('MM.DD.YY')
-      );
+      const date = today.clone().add(i, 'days').format('MM.DD.YY')
+
+      dates.push({
+        id : date,
+      });
     }
 
     this.setState({
-      times: times
-    })
+      dates
+    });
+    
   }
 
   render() {
@@ -39,11 +60,15 @@ class App extends Component {
     return (
       <div className="App">
         <Header 
-          times={this.state.times}
+          dates={this.state.dates}
           updateOffset={this.updateOffset}>
           Time Tracking
         </Header>
-        <TimesList times={this.state.times}/>
+        <TimesList 
+          dates={this.state.dates}
+          changeTime={this.changeTime}
+          hours={ this.state.hours }
+        />
       </div>
     );
   }
