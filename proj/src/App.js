@@ -5,8 +5,13 @@ import moment from 'moment';
 
 class App extends Component {
   state = {
-    offset: 0
+    offset: 0,
+    times: []
   };
+
+  componentWillMount() {
+
+  }
 
   render() {
     const today = new moment().add(this.state.offset, 'days');

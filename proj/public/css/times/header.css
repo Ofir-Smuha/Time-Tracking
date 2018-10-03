@@ -1,8 +1,11 @@
 .header-container {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -13,4 +16,16 @@
 
 .dates {
   font-size: 0.9rem;
+}
+
+.prev-btn, .next-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #EFEFEF;
+}
+
+.prev-btn {
+  margin-right: 0.8rem;
 }
