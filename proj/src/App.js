@@ -9,7 +9,7 @@ class App extends Component {
   };
 
   render() {
-    const today = new moment().add(this.state.offset, 'days');
+    const today = moment().add(this.state.offset, 'days');
     const times = [];
 
     for (let i = 0; i < 7; i++) {
@@ -17,8 +17,6 @@ class App extends Component {
         today.clone().add(i, 'days').format('DD.MM.YY')
       );
     }
-
-    console.log(times);
 
     return (
       <div className="App">

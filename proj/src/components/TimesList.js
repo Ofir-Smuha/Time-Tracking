@@ -1,7 +1,7 @@
 import React from 'react'
 import TimePreview from './TimePreview';
 
-export default (props) => {
+const TimeList = (props) => {
   return (
     <div>
       <ul className="times-container">
@@ -10,3 +10,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default TimeList

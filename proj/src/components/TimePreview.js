@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
-export default (props) => {
+
+const TimePreview = (props) => {
   return (
     <div>
       <li className="time-prev-container">
@@ -9,3 +10,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default TimePreview
