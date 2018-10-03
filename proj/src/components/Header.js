@@ -1,18 +1,16 @@
 import React from 'react'
 import moment from 'moment'
-import fp from 'lodash/fp'
+import {head, last} from 'lodash/fp'
 
 const Header = (props) => {
 
-  const startDate = fp.head(props.times)
-  const endDate = fp.last(props.times)
+  const startDate = moment(head(props.times)).format('MMM DD, YYYY')
+  const endDate = moment(last(props.times)).format('MMM DD, YYYY')
   
   return (
     <div className="header-container">
       <h1 className="title">{props.children}</h1>
-      <h3 className="dates">
-        {moment(startDate).format('MMM DD, YYYY')} - {moment(endDate).format('MMM DD, YYYY')}
-      </h3>
+      <h3 className="dates">{startDate} - {endDate}</h3>
     </div> 
   )
 }

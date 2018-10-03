@@ -14,7 +14,7 @@ class App extends Component {
 
     for (let i = 0; i < 7; i++) {
       times.push(
-        today.clone().add(i, 'days').format('DD.MM.YY')
+        today.clone().add(i, 'days').format('MM.DD.YY')
       );
     }
 
