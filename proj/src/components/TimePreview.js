@@ -2,15 +2,44 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import styled, { ThemeProvider } from 'styled-components'
+import {theme} from '../constants/themes'
 
-const theme = {
-  main: '#9013FE',
-}
+// Style
+const PrevContainer = styled.li`
+  height: 15rem;
+  width: 5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border: 1px solid #E1E1E1;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #EFEFEF;
+`
 
 const Dates = styled.h3`
   padding: 0.5rem 0.8rem;
   color: ${props => props.theme.main}
 `
+
+const HourInput = styled.input`
+  width: 40%;
+  border-radius: 5px;
+  border: none;
+  padding: 5px 10px;
+  ${({ active }) => active && `
+  display: none;
+`}
+`
+
+const HourDisplay = styled.span`
+    display: none;
+  ${({ active }) => active && `
+    display: inline-block;
+  `}
+`
+
 
 class TimePreview extends Component {
   
@@ -36,19 +65,19 @@ class TimePreview extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <li className="time-prev-container">
+        <PrevContainer>
           <Dates>{moment(this.props.date.id).format('DD.MM')}</Dates>
-          <input
-            type="text" 
+          <HourInput
+            type="text"
+            active={this.state.displayHours || this.props.total} 
             onChange={(e) => this.handleTimeChange(e)} 
-            className={`date-input ${this.state.displayHours || this.props.total? ' hidden' : ' show'}`}
           />
-          <span 
-            className={`${this.state.displayHours || this.props.total? ' show' : ' hidden'}`}
+          <HourDisplay 
+            active={this.state.displayHours || this.props.total} 
             onClick={this.handleEditTime}>
             total: { this.props.total }
-          </span>
-      </li>
+          </HourDisplay>
+      </PrevContainer>
       </ThemeProvider>
     )
   }

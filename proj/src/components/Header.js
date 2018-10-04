@@ -2,17 +2,12 @@ import React from 'react'
 import moment from 'moment'
 import { head, last, get } from 'lodash/fp'
 import styled, {ThemeProvider} from 'styled-components'
-// import theme from '../constants/themes'
+import {theme} from '../constants/themes'
 
 
 const Header = (props) => {
 
   // Styles
-  const theme = {
-    main: '#9013FE',
-    size: '0.8rem'
-  };
-
   const Title = styled.h1`
   font-size: 1.3rem;
   font-weight: bold;
