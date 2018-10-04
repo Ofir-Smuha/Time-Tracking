@@ -15,7 +15,7 @@ class TimePreview extends Component {
     })
   }
 
-  handleEditTime = () => {
+  editTime = () => {
     this.setState({
       displayHours: false
     })
@@ -28,12 +28,12 @@ class TimePreview extends Component {
           <h3 className="time">{moment(this.props.date.id).format('DD.MM')}</h3>
           <input
             type="text" 
-            onChange={(e) => this.handleTimeChange(e)} 
+            onChange={this.handleTimeChange} 
             className={`date-input ${this.state.displayHours || this.props.total? ' hidden' : ' show'}`}
           />
           <span 
             className={`${this.state.displayHours || this.props.total? ' show' : ' hidden'}`}
-            onClick={this.handleEditTime}>
+            onClick={this.editTime}>
             total: { this.props.total }
           </span>
       </li>
