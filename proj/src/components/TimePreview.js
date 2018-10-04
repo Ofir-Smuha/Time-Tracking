@@ -2,21 +2,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 
-// const TimePreview = ({ date, changeTime, total }) => {
-//   return (
-//     <li className="time-prev-container">
-//       <h3 className="time">{moment(date.id).format('DD.MM')}</h3>
-//       <input
-//         type="text" 
-//         onChange={(e) => changeTime(e.target.value, date.id)} 
-//         className="date-input"
-//       />
-//       <span>total: { total }</span>
-//     </li>
-//   )
-// }
-
-
 class TimePreview extends Component {
   state = {
     displayHours: false,

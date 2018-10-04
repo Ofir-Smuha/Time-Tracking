@@ -16,19 +16,11 @@ class App extends Component {
   }
 
   changeTime = (hoursValue, id) => {
-    // this.setState(prevState => {
-    // const timeIdx = this.state.times.findIndex(time => time.id === id);
-    //   return set(
-    //     prevState,
-    //     this.state.times[timeIdx].id, // this could also be ['users', index, 'job']
-    //     date
-    //   )
-    // },() => console.log('changed',this.state.times));
     const hours = { ...this.state.hours };
 
     this.setState({
       hours: set([id], hoursValue, hours)
-    }, () => console.log('changed', this.state.hours))
+    })
   }
 
   updateOffset = (offset) => {
@@ -56,7 +48,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <Header 
