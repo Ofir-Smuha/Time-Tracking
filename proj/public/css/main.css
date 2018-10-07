@@ -3,3 +3,7 @@
 @import 'times/times-list.css';
 @import 'times/times-prev.css';
 @import 'times/header.css';
+
+body {
+  box-sizing: border-box;
+}
