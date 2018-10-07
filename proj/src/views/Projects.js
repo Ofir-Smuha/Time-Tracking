@@ -146,6 +146,7 @@ class Projects extends Component {
         </ContentContainer>
         <AddNew 
           displayAdd={this.state.displayAdd}
+          name="dudu"
           closeAddProject={this.closeAddProject}
           submitProject={this.submitProject}
         />

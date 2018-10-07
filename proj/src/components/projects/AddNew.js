@@ -59,7 +59,7 @@ const CloseButton = styled.button`
   right: 0;
 `
 
-export default (props) => {
+const AddNew =  (props) => {
   
   if(!props.displayAdd) return null;
   
@@ -77,7 +77,7 @@ export default (props) => {
         <Title>Add new project</Title>
         <form onSubmit={ submit }>
           <Label>Project Label</Label>
-          <Input type="text" name="name" innerRef={el => input = el }/>
+          <Input type="text" name="name" defaultValue={ props.name }/>
           <ThemeProvider theme={theme}>
             <Button>SAVE</Button>
           </ThemeProvider>
@@ -86,3 +86,5 @@ export default (props) => {
     </Backdrop>
   )
 }
+
+export default AddNew
