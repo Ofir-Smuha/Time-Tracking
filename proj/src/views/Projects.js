@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '../constants/themes'
 import AddNew from '../components/projects/AddNew'
+const uuidv4 = require('uuid/v4');
 
 const Wrapper = styled.div`
   display: flex;
@@ -80,9 +81,9 @@ class Projects extends Component {
 
   state = {
     displayAdd: false,
-    projects: [{name: 'Project 1'},
-               {name: 'Project 2'},
-               {name: 'Project 3'}],
+    projects: [{id: uuidv4(), name: 'Project 1'},
+               {id: uuidv4(), name: 'Project 2'},
+               {id: uuidv4(), name: 'Project 3'}],
   }
 
   openAddProject = () => {
@@ -98,7 +99,7 @@ class Projects extends Component {
   }
 
   submitProject = (value) => {
-    const projects = [...this.state.projects, {name: value}]
+    const projects = [...this.state.projects, {id: uuidv4(), name: value}]
     this.setState({
       projects: projects,
       displayAdd: false
@@ -109,14 +110,20 @@ class Projects extends Component {
 
   }
 
-  deleteProject = () => {
-
+  deleteProject = (projId) => {
+    const projects = this.state.projects.filter(project => {
+      return project.id !== projId
+    })
+    console.log(projects)
+    this.setState({
+      projects: projects,
+    })
   }
 
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper> 
         <ThemeProvider theme={theme}>
           <Title>Projects</Title>
         </ThemeProvider>
@@ -130,7 +137,7 @@ class Projects extends Component {
                 <Project key={project.name}>
                   <ProjName>{project.name}</ProjName>
                   <Options>
-                    <Edit>EDIT</Edit> | <Delete>DELETE</Delete>
+                    <Edit>EDIT</Edit> | <Delete onClick={() => this.deleteProject(project.id)}>DELETE</Delete>
                   </Options>
                 </Project>
               )
