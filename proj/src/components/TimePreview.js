@@ -1,8 +1,19 @@
 
 import React, { Component } from 'react'
 import moment from 'moment'
+import styled, { ThemeProvider } from 'styled-components'
+
+const theme = {
+  main: '#9013FE',
+}
+
+const Dates = styled.h3`
+  padding: 0.5rem 0.8rem;
+  color: ${props => props.theme.main}
+`
 
 class TimePreview extends Component {
+  
   state = {
     displayHours: false,
   }
@@ -21,11 +32,12 @@ class TimePreview extends Component {
     })
   }
 
+  
   render() {
     return (
-      <div>
+      <ThemeProvider theme={theme}>
         <li className="time-prev-container">
-          <h3 className="time">{moment(this.props.date.id).format('DD.MM')}</h3>
+          <Dates>{moment(this.props.date.id).format('DD.MM')}</Dates>
           <input
             type="text" 
             onChange={this.handleTimeChange} 
@@ -37,7 +49,7 @@ class TimePreview extends Component {
             total: { this.props.total }
           </span>
       </li>
-      </div>
+      </ThemeProvider>
     )
   }
 }
