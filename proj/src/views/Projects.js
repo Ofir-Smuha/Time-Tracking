@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
-import { theme } from '../constants/themes'
-import AddNew from '../components/projects/AddNew'
-const uuidv4 = require('uuid/v4');
+import React, { Component } from 'react';
+import EditProject from '../components/projects/EditProject';
+import ProjectList from '../components/projects/ProjectList'
+import styled, { ThemeProvider } from 'styled-components';
+import { theme } from '../constants/themes';
+import uuidv4 from 'uuid/v4';
+import { set, unset } from 'lodash/fp';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,126 +38,105 @@ const AddButton = styled.button`
   cursor: pointer;
 `
 
-const ProjectList = styled.ul`
-  background-color: #F9F9F9;
-  border-radius: 5px;
-  padding: 1.2rem;
-  min-height: 25rem;
-`
-
-const Project = styled.li`
-  width: 25rem;
-  border-radius: 5px;
-  padding: 0.9rem 1.1rem;
-  margin-bottom: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  background-color: #fff;
-  box-shadow: 0px 10px 15px -10px rgba(156,156,156,1);
-`
-
-const ProjName = styled.h1`
-  cursor: pointer;
-`
-
-const Options = styled.div`
-  display: flex;
-  font-size: 0.9rem;
-`
-
-const Edit = styled.h1`
-margin-right: 0.5rem;
-cursor: pointer;
-`
-
-const Delete = styled.h1`
-color: red;
-margin-left: 0.5rem;
-cursor: pointer;
-`
-
-
-
 class Projects extends Component {
 
   state = {
-    displayAdd: false,
-    projects: [{id: uuidv4(), name: 'Project 1'},
-               {id: uuidv4(), name: 'Project 2'},
-               {id: uuidv4(), name: 'Project 3'}],
+    displayEditModal: false,
+    currProject: false,
+    projects: {
+      1: {id: 1, name: 'Project 1'},
+      2: {id: 2, name: 'Project 2'},
+      3: {id: 3, name: 'Project 3'},
+    }
   }
 
-  openAddProject = () => {
+  openEditModal = () => {
     this.setState({
-      displayAdd: true
+      displayEditModal: true
     })
   }
 
-  closeAddProject = () => {
+  closeEditModal = () => {
+    if (this.state.currProject) {
+      this.setState({
+        displayEditModal: false,
+        currProject: false
+      })
+    } else {
+      this.setState({
+        displayEditModal: false
+      })
+    }
+  }
+  
+  submitProject = (newName, projectId) => {
+    if (projectId) { 
+      this.setState({
+        projects: set([projectId, 'name'], newName, this.state.projects),
+        displayEditModal: false,
+        currProject: false
+      })
+    } else {
+      const newProjectId = uuidv4()
+      const newProject = {id: newProjectId, name: newName}
+      this.setState({
+        projects: set([newProjectId], newProject, this.state.projects),
+        displayEditModal: false
+      })
+    }
+  }
+
+  editProject = (project) => () => {
     this.setState({
-      displayAdd: false
+      currProject: project,
+      displayEditModal: true
     })
   }
-
-  submitProject = (value) => {
-    const projects = [...this.state.projects, {id: uuidv4(), name: value}]
-    this.setState({
-      projects: projects,
-      displayAdd: false
-    })
-  }
-
-  editProject = () => {
-
-  }
+  
 
   deleteProject = (projId) => {
-    const projects = this.state.projects.filter(project => {
-      return project.id !== projId
-    })
-    console.log(projects)
-    this.setState({
-      projects: projects,
-    })
-  }
 
+    this.setState({
+      projects: unset([projId], this.state.projects)
+    })
+
+  }
 
   render() {
     return (
-      <Wrapper> 
+      <Wrapper>
+
         <ThemeProvider theme={theme}>
           <Title>Projects</Title>
         </ThemeProvider>
+
         <ContentContainer>
           <ButtonContainer>
-            <AddButton onClick={this.openAddProject}>ADD PROJECT</AddButton>
+            <AddButton onClick={this.openEditModal}>ADD PROJECT</AddButton>
           </ButtonContainer>
-          <ProjectList>
-            {this.state.projects.map(project => {
-              return (
-                <Project key={project.name}>
-                  <ProjName>{project.name}</ProjName>
-                  <Options>
-                    <Edit>EDIT</Edit> | <Delete onClick={() => this.deleteProject(project.id)}>DELETE</Delete>
-                  </Options>
-                </Project>
-              )
-            })}
-          </ProjectList>
+          
+          <ProjectList 
+            projects={this.state.projects}
+            deleteProject={this.deleteProject}
+            editProject={this.editProject}
+          />
         </ContentContainer>
-        <AddNew 
-          displayAdd={this.state.displayAdd}
-          name="dudu"
-          closeAddProject={this.closeAddProject}
-          submitProject={this.submitProject}
-        />
+
+        { 
+          this.state.displayEditModal && 
+          <EditProject 
+            closeEditModal={this.closeEditModal}
+            submitProject={this.submitProject}
+            projectId={this.state.currProject.id}
+            title={this.state.currProject.name || 'Add new project'}
+            inputValue={this.state.currProject.name}
+          />
+        }
+
       </Wrapper>
     )
   }
 }
-
-Projects.defaultProps = { projects: [{projectName:'Project 1'}] };
 
 export default Projects
 

@@ -8,7 +8,8 @@ import { theme } from '../../constants/themes'
 // Style
 const PrevContainer = styled.li`
   height: 15rem;
-  width: 5rem;
+  flex: 1;
+  margin: 0 0.5rem;
   font-size: 0.9rem;
   font-weight: bold;
   border: 1px solid #E1E1E1;
@@ -62,11 +63,6 @@ class TimePreview extends Component {
     })
   }
 
-  componentDidMount() {
-    console.log('ddd',this.props)
-  }
-
-  
   render() {
     return (
       <ThemeProvider theme={theme}>
