@@ -1,7 +1,4 @@
-const theme = {
-  main: "#9013FE"
+export const theme = {
+  main: "#9013FE",
+  background: "#F9F9F9"
 };
-
-export default {
-  theme
-}
