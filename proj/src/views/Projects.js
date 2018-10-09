@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import EditProject from '../components/projects/EditProject';
-import ProjectList from '../components/projects/ProjectList'
+import EditProject from 'components/projects/EditProject';
+import ProjectList from 'components/projects/ProjectList'
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import { set, unset } from 'lodash/fp';

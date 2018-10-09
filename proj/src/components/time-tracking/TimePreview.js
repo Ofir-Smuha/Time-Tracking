@@ -50,7 +50,7 @@ class TimePreview extends Component {
 
   handleTimeChange = (e) => {
     if (e.target.value === '') return 
-    this.props.changeTime(e.target.value, this.props.date.id)
+    this.props.handleChangeTime(e.target.value, this.props.date.id)
     this.setState({
       displayHours: true
     })
@@ -61,10 +61,7 @@ class TimePreview extends Component {
       displayHours: false
     })
   }
-
-  componentWillReceiveProps() {
-    console.log(this.props.date, this.props.total)
-  }
+  
   render() {
     return (
       <PrevContainer>
@@ -86,7 +83,7 @@ class TimePreview extends Component {
 
 TimePreview.propTypes = {
   date: PropTypes.object,
-  total: PropTypes.number
+  total: PropTypes.string
 }
 
 export default TimePreview;

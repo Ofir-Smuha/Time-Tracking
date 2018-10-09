@@ -17,8 +17,8 @@ export default class Statistics extends Component {
       {date: 'day 1', Vision: 5, RunTime: 3},
       {date: 'day 2', Vision: 2, RunTime: 4, Fox: 3},
       {date: 'day 3', Vision: 3, RunTime: 8, Fox: 4},
-      {date: 'day 4', Vision: 4, RunTime: 5, Fox: 5},
-      {date: 'day 5', Vision: 11, RunTime: 1, Fox: 6},
+      {date: 'day 4', Vision: 4, RunTime: 5, Fox: 5, Nort: 2},
+      {date: 'day 5', Vision: 11, RunTime: 1, Fox: 6, Barc: 2},
       {date: 'day 6', Vision: 6, RunTime: 4, Fox: 7},
       {date: 'day 7', Vision: 7, RunTime: 3, Fox: 10, Nasa: 8}
     ]
@@ -50,8 +50,8 @@ export default class Statistics extends Component {
         <XAxis dataKey="date"/>
         <YAxis/>
         <Tooltip/>
-        <Legend />
         {this.drawBars()}
+        <Legend/>
         </BarChart>
       </Wrapper>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Header from '../components/time-tracking/Header';
-import TimesList from '../components/time-tracking/TimesList';
+import Header from 'components/time-tracking/Header';
+import TimesList from 'components/time-tracking/TimesList';
 import moment from 'moment';
 import {set} from 'lodash/fp'
 
@@ -58,7 +58,7 @@ class TimeTracking extends Component {
         </Header>
         <TimesList 
           dates={this.state.dates}
-          changeTime={this.changeTime}
+          handleChangeTime={this.changeTime}
           hours={ this.state.hours }
         />
       </div>
