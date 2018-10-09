@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import EditProject from '../components/projects/EditProject';
 import ProjectList from '../components/projects/ProjectList'
-import styled, { ThemeProvider } from 'styled-components';
-import { theme } from '../constants/themes';
+import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import { set, unset } from 'lodash/fp';
 
@@ -105,11 +104,7 @@ class Projects extends Component {
   render() {
     return (
       <Wrapper>
-
-        <ThemeProvider theme={theme}>
-          <Title>Projects</Title>
-        </ThemeProvider>
-
+        <Title>Projects</Title>
         <ContentContainer>
           <ButtonContainer>
             <AddButton onClick={this.openEditModal}>ADD PROJECT</AddButton>
@@ -117,16 +112,16 @@ class Projects extends Component {
           
           <ProjectList 
             projects={this.state.projects}
-            deleteProject={this.deleteProject}
-            editProject={this.editProject}
+            onDeleteProject={this.deleteProject}
+            onEditProject={this.editProject}
           />
         </ContentContainer>
 
         { 
           this.state.displayEditModal && 
           <EditProject 
-            closeEditModal={this.closeEditModal}
-            submitProject={this.submitProject}
+            onCloseEditModal={this.closeEditModal}
+            onSubmitProject={this.submitProject}
             projectId={this.state.currProject.id}
             title={this.state.currProject.name || 'Add new project'}
             inputValue={this.state.currProject.name}

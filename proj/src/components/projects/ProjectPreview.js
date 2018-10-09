@@ -10,11 +10,10 @@ const Project = styled.li`
   justify-content: space-between;
   font-weight: bold;
   background-color: #fff;
-  box-shadow: 0px 10px 15px -10px rgba(156,156,156,1);
+  box-shadow: 0 10px 15px -10px rgba(156,156,156,1);
 `
 
-const ProjName = styled.h1`
-  cursor: pointer;
+const ProjectName = styled.h1`
 `
 
 const Options = styled.div`
@@ -23,25 +22,27 @@ const Options = styled.div`
 `
 
 const Edit = styled.h1`
-margin-right: 0.5rem;
-cursor: pointer;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
 `
 
 const Delete = styled.h1`
-color: red;
-margin-left: 0.5rem;
-cursor: pointer;
+  color: red;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+  cursor: pointer;
 `
 
 
 const ProjectPreview = (props) => {
   return (
     <Project>
-      <ProjName>{props.project.name}</ProjName>
+      <ProjectName>{props.project.name}</ProjectName>
       <Options>
-        <Edit onClick={ props.editProject(props.project)}>EDIT</Edit>
+        <Edit onClick={ props.onEditProject(props.project)}>edit</Edit>
           | 
-        <Delete onClick={() => props.deleteProject(props.project.id)}>DELETE</Delete>
+        <Delete onClick={() => props.onDeleteProject(props.project.id)}>delete</Delete>
       </Options>
     </Project>
   )

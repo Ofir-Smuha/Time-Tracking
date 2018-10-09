@@ -1,8 +1,5 @@
 import React from 'react'
-import styled, {ThemeProvider} from 'styled-components'
-import { theme } from '../../constants/themes'
-import { get } from 'lodash/fp';
-
+import styled from 'styled-components'
 
 const Backdrop = styled.div`
   position: fixed;
@@ -30,9 +27,9 @@ const Title = styled.h1`
 `
 
 const Label = styled.label`
-font-size: 0.8rem;
-font-weight: bold;
-margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 `
 
 const Input = styled.input`
@@ -50,7 +47,7 @@ const Button = styled.button`
   border: none;
   font-weight: bold;
   color: #fff;
-  background-color: ${props => props.theme.main}
+  background-color: ${({theme}) => theme.main}
   cursor: pointer;
 `
 
@@ -64,20 +61,18 @@ const EditProject = (props) => {
   
   const submit = (e) => {
     e.preventDefault();
-    props.submitProject(e.target.elements.name.value, props.projectId);
+    props.onSubmitProject(e.target.elements.name.value, props.projectId);
   }
 
   return (
     <Backdrop>
       <Modal>
-        <CloseButton onClick={props.closeEditModal}>X</CloseButton>
+        <CloseButton onClick={props.onCloseEditModal}>X</CloseButton>
         <Title>{ props.title }</Title>
         <form onSubmit={ submit }>
           <Label>Project Label</Label>
           <Input type="text" name="name" defaultValue={ props.inputValue }/>
-          <ThemeProvider theme={theme}>
             <Button>SAVE</Button>
-          </ThemeProvider>
         </form>
       </Modal>
     </Backdrop>

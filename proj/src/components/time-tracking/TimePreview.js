@@ -2,8 +2,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import moment from 'moment'
-import styled, { ThemeProvider } from 'styled-components'
-import { theme } from '../../constants/themes'
+import styled from 'styled-components'
 
 // Style
 const PrevContainer = styled.li`
@@ -22,7 +21,7 @@ const PrevContainer = styled.li`
 
 const Dates = styled.h3`
   padding: 0.5rem 0.8rem;
-  color: ${props => props.theme.main}
+  color: ${({theme}) => theme.main}
 `
 
 const HourInput = styled.input`
@@ -50,8 +49,8 @@ class TimePreview extends Component {
   }
 
   handleTimeChange = (e) => {
-    this.props.changeTime(e.target.value, this.props.date.id)
     if (e.target.value === '') return 
+    this.props.changeTime(e.target.value, this.props.date.id)
     this.setState({
       displayHours: true
     })
@@ -65,21 +64,19 @@ class TimePreview extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <PrevContainer>
-          <Dates>{moment(this.props.date.id).format('DD.MM')}</Dates>
-          <HourInput
-            type="text"
-            active={this.state.displayHours || this.props.total} 
-            onChange={(e) => this.handleTimeChange(e)} 
-          />
-          <HourDisplay 
-            active={this.state.displayHours || this.props.total} 
-            onClick={this.handleEditTime}>
-            total: { this.props.total }
-          </HourDisplay>
+      <PrevContainer>
+        <Dates>{moment(this.props.date.id).format('DD.MM')}</Dates>
+        <HourInput
+          type="text"
+          active={this.state.displayHours || this.props.total} 
+          onChange={(e) => this.handleTimeChange(e)} 
+        />
+        <HourDisplay 
+          active={this.state.displayHours || this.props.total} 
+          onClick={this.handleEditTime}>
+          total: { this.props.total }
+        </HourDisplay>
       </PrevContainer>
-      </ThemeProvider>
     )
   }
 }

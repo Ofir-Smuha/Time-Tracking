@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
-import {theme} from '../constants/themes'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 const LoginContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%,-50%);
+  width: 300px;
   padding: 1.2rem 1.5rem;
   background-color: #F9F9F9;
   display: flex;
@@ -30,7 +34,7 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-  background-color: ${props => props.theme.main}
+  background-color: ${({theme}) => theme.main}
   border-radius: 5px;
   border: none;
   color: #fff;
@@ -49,18 +53,16 @@ const Label = styled.label`
 class Login extends Component {
   render() {
     return (
-      <ThemeProvider theme={theme}>
+      <Wrapper>
         <LoginContainer>
           <Title>Login</Title>
           <Label>Email</Label>
-          <Input
-          type="text"/>
+          <Input type="text"/>
           <Label>Password</Label>
-          <Input
-          type="text"/>
+          <Input type="text"/>
           <Button>LOGIN</Button>
         </LoginContainer>
-      </ThemeProvider>
+      </Wrapper>
     )
   }
 }

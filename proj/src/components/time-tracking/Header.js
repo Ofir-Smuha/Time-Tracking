@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { head, last, get } from 'lodash/fp';
-import styled, {ThemeProvider} from 'styled-components';
+import styled from 'styled-components';
 import {theme} from '../../constants/themes';
 
 
@@ -12,7 +12,7 @@ const Header = (props) => {
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 0.4rem;
-  color: ${props => props.theme.main};
+  color: ${({theme}) => theme.main};
   `
 
   const Button = styled.button`
@@ -21,7 +21,7 @@ const Header = (props) => {
     font-weight: bold;
     cursor: pointer;
     color: #fff
-    background-color: ${props => props.theme.main};
+    background-color: ${({theme}) => theme.main};
   `
   const FirstButton = styled(Button)`
     margin-right: 0.8rem;
@@ -31,7 +31,6 @@ const Header = (props) => {
   const endDate = moment(get('id', last(props.dates))).format('MMM DD, YYYY');
 
   return (
-    <ThemeProvider theme={theme}>
       <div className="header-container">
         <div>
             <Title>{props.children}</Title>
@@ -42,7 +41,6 @@ const Header = (props) => {
           <Button onClick={() => props.updateOffset(7)}>NEXT</Button>
         </div>
       </div> 
-    </ThemeProvider>
   )
 }
 

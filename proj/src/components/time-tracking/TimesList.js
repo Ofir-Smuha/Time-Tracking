@@ -4,8 +4,6 @@ import TimePreview from './TimePreview';
 import { get } from 'lodash/fp';
 import styled from 'styled-components'
 
-const TimeList = (props) => {
-
   // Styles
   const List = styled.ul`
     width: 70%;
@@ -16,6 +14,7 @@ const TimeList = (props) => {
     padding: 0.5rem;
   `
 
+const TimeList = (props) => {
   return (
     <div>
       <List>
