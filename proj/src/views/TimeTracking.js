@@ -4,7 +4,9 @@ import TimesList from '../components/time-tracking/TimesList';
 import moment from 'moment';
 import {set} from 'lodash/fp'
 
+
 class TimeTracking extends Component {
+
   state = {
     offset: 0,
     dates: [],
@@ -44,7 +46,6 @@ class TimeTracking extends Component {
     this.setState({
       dates
     });
-    
   }
 
   render() {

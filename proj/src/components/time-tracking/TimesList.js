@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import TimePreview from './TimePreview';
-import { get } from 'lodash/fp';
 import styled from 'styled-components'
+import { get } from 'lodash/fp';
 
   // Styles
   const List = styled.ul`
