@@ -62,6 +62,9 @@ class TimePreview extends Component {
     })
   }
 
+  componentWillReceiveProps() {
+    console.log(this.props.date, this.props.total)
+  }
   render() {
     return (
       <PrevContainer>
