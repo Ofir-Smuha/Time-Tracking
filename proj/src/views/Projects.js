@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import EditProject from 'components/projects/EditProject';
+import WithLoader from 'components/projects/WithLoader'
 import ProjectList from 'components/projects/ProjectList'
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import { set, unset } from 'lodash/fp';
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,9 +39,12 @@ const AddButton = styled.button`
   cursor: pointer;
 `
 
+const EditWithLoader = WithLoader(EditProject)
+
 class Projects extends Component {
 
   state = {
+    isLoading: false,
     displayEditModal: false,
     currProject: false,
     projects: {
@@ -69,10 +74,12 @@ class Projects extends Component {
   }
   
   submitProject = (newName, projectId) => {
+    this.setState({ isLoading: true });
     if (projectId) { 
       this.setState({
         projects: set([projectId, 'name'], newName, this.state.projects),
         displayEditModal: false,
+        isLoading: false,
         currProject: false
       })
     } else {
@@ -80,7 +87,8 @@ class Projects extends Component {
       const newProject = {id: newProjectId, name: newName}
       this.setState({
         projects: set([newProjectId], newProject, this.state.projects),
-        displayEditModal: false
+        displayEditModal: false,
+        isLoading: false,
       })
     }
   }
@@ -119,12 +127,13 @@ class Projects extends Component {
 
         { 
           this.state.displayEditModal && 
-          <EditProject 
+          <EditWithLoader 
             onCloseEditModal={this.closeEditModal}
             onSubmitProject={this.submitProject}
             projectId={this.state.currProject.id}
             title={this.state.currProject.name || 'Add new project'}
             inputValue={this.state.currProject.name}
+            isLoading={this.state.isLoading}
           />
         }
 
