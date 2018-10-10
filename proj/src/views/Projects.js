@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import EditProject from 'components/projects/EditProject';
 import WithLoader from 'components/projects/WithLoader'
 import ProjectList from 'components/projects/ProjectList'
+import ProjectPreview from 'components/projects/ProjectPreview';
+import gridLayout from 'assets/images/grid.png'
+import listLayout from 'assets/images/list.png'
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import { set, unset } from 'lodash/fp';
+
 
 
 const Wrapper = styled.div`
@@ -23,9 +27,9 @@ const ContentContainer = styled.div`
   margin: 0 auto;
 `
 
-const ButtonContainer = styled.div`
+const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-bottom: 1rem;
 `
 
@@ -39,6 +43,18 @@ const AddButton = styled.button`
   cursor: pointer;
 `
 
+const LayoutSelectors = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const LayoutSelector = styled.img`
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  cursor: pointer;
+`
+
 const EditWithLoader = WithLoader(EditProject)
 
 class Projects extends Component {
@@ -46,6 +62,7 @@ class Projects extends Component {
   state = {
     isLoading: false,
     displayEditModal: false,
+    displayMode: 'list',
     currProject: false,
     projects: {
       1: {id: 1, name: 'Project 1'},
@@ -106,7 +123,11 @@ class Projects extends Component {
     this.setState({
       projects: unset([projId], this.state.projects)
     })
+  }
 
+  changeLayout = (layout) => {
+    console.log(layout)
+    this.setState({displayMode: layout})
   }
 
   render() {
@@ -114,14 +135,29 @@ class Projects extends Component {
       <Wrapper>
         <Title>Projects</Title>
         <ContentContainer>
-          <ButtonContainer>
+          <ButtonsContainer>
+            <LayoutSelectors>
+              <LayoutSelector onClick={() => this.changeLayout('grid')} src={gridLayout} alt="grid-icon"/>
+              <LayoutSelector onClick={() => this.changeLayout('list')} src={listLayout} alt="list-icon"/>
+            </LayoutSelectors>
             <AddButton onClick={this.openEditModal}>ADD PROJECT</AddButton>
-          </ButtonContainer>
+          </ButtonsContainer>
           
           <ProjectList 
             projects={this.state.projects}
             onDeleteProject={this.deleteProject}
             onEditProject={this.editProject}
+            displayMode={ this.state.displayMode }
+            renderProject={ (project) => {
+              return (
+                <ProjectPreview
+                        key={project.id}
+                        displayMode={ this.state.displayMode }
+                        project={project}
+                        onDeleteProject={this.deleteProject}
+                        onEditProject={this.editProject}/>
+              ) }
+            } 
           />
         </ContentContainer>
 
