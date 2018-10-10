@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import { head, last, get } from 'lodash/fp';
 import styled from 'styled-components';
-import {theme} from '../../constants/themes';
 
 
 const Header = (props) => {
