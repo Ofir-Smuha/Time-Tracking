@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import EditProject from 'components/projects/EditProject';
-import WithLoader from 'components/projects/WithLoader'
+import withLoader from 'components/projects/withLoader'
 import ProjectList from 'components/projects/ProjectList'
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
@@ -39,7 +39,7 @@ const AddButton = styled.button`
   cursor: pointer;
 `
 
-const EditWithLoader = WithLoader(EditProject)
+const EditWithLoader = withLoader(EditProject)
 
 class Projects extends Component {
 
