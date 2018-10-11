@@ -11,15 +11,15 @@ const Loader = styled.img`
 `
 
 
-const WithLoader = (WrappedComponent) => {
-  return class extends Component {
-    state = {}
-    
+const withLoader = (WrappedComponent) => {
+  return class extends Component { 
     render() {
-        if (this.props.isLoading) return (<Loader src={loader} alt="loading"/>)
-        return (<WrappedComponent {...this.props}></WrappedComponent>)
+      if (this.props.isLoading){
+        return (<Loader src={loader} alt="loading"/>)
+      }
+      return (<WrappedComponent {...this.props}></WrappedComponent>)
     }
   }
 }
 
-export default WithLoader
+export default withLoader

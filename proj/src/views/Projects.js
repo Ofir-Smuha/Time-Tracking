@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import EditProject from 'components/projects/EditProject';
-import WithLoader from 'components/projects/WithLoader'
+import withLoader from 'components/projects/withLoader'
 import ProjectList from 'components/projects/ProjectList'
 import ProjectPreview from 'components/projects/ProjectPreview';
 import gridLayout from 'assets/images/grid.png'
@@ -55,7 +55,7 @@ const LayoutSelector = styled.img`
   cursor: pointer;
 `
 
-const EditWithLoader = WithLoader(EditProject)
+const EditWithLoader = withLoader(EditProject)
 
 class Projects extends Component {
 

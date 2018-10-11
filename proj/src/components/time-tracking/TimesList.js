@@ -20,7 +20,7 @@ const TimeList = (props) => {
       <List>
         {props.dates.map(date => 
           <TimePreview 
-          handleChangeTime={props.handleChangeTime} 
+            handleChangeTime={props.handleChangeTime} 
             key={date.id} 
             date={date}
             total={ get(date.id, props.hours) }
