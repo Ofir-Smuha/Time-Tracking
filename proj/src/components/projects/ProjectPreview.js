@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Project = styled.li`
@@ -48,5 +49,10 @@ const ProjectPreview = (props) => {
   )
 }
 
+ProjectPreview.propTypes = {
+  onDeleteProject: PropTypes.func,
+  onEditProject: PropTypes.func,
+  project: PropTypes.object
+}
 
 export default ProjectPreview

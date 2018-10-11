@@ -20,7 +20,7 @@ const TimeList = (props) => {
       <List>
         {props.dates.map(date => 
           <TimePreview 
-            changeTime={props.changeTime} 
+          handleChangeTime={props.handleChangeTime} 
             key={date.id} 
             date={date}
             total={ get(date.id, props.hours) }
@@ -32,7 +32,8 @@ const TimeList = (props) => {
 }
 
 TimeList.propTypes = {
-  dates: PropTypes.array
+  dates: PropTypes.array,
+  handleChangeTime: PropTypes.func
 }
 
 export default TimeList
