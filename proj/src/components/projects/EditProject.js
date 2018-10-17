@@ -1,5 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import uuidv4 from 'uuid/v4';
+import PropTypes from 'prop-types';
+
+import { closeEditModal, isLoading, addProject, editProject} from 'actions/projectsActions';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -59,19 +64,46 @@ const CloseButton = styled.button`
 
 const EditProject = (props) => {
   
-  const submit = (e) => {
+  const submitProject = (e) => {
     e.preventDefault();
-    props.onSubmitProject(e.target.elements.name.value, props.projectId);
+    const inputValue = e.target.elements[0].value
+    props.isLoading();
+
+    if (props.currProject) { 
+      const editedProject = { ...props.currProject };
+      editedProject.name = inputValue
+      props.editProject(editedProject)
+    } else {
+      const newProjectId = uuidv4()
+      const newProject = {id: newProjectId, name: inputValue}
+      props.addProject(newProject)
+    }
+  }
+
+  const renderTitle = () => {
+    if (props.currProject) {
+      return <Title>{props.currProject.name}</Title>
+    } else {
+      return <Title>Add new project</Title>
+    }
+  }
+
+  const renderInput = () => {
+    if (props.currProject) {
+      return <Input type="text" name="name" defaultValue={props.currProject.name}/>
+    } else {
+      return <Input type="text" name="name"/>
+    }
   }
 
   return (
     <Backdrop>
       <Modal>
-        <CloseButton onClick={props.onCloseEditModal}>X</CloseButton>
-        <Title>{ props.title }</Title>
-        <form onSubmit={ submit }>
+        <CloseButton onClick={props.closeEditModal}>X</CloseButton>
+        {renderTitle()}
+        <form onSubmit={submitProject}>
           <Label>Project Label</Label>
-          <Input type="text" name="name" defaultValue={ props.inputValue }/>
+          {renderInput()}
             <Button>SAVE</Button>
         </form>
       </Modal>
@@ -79,5 +111,15 @@ const EditProject = (props) => {
   )
 }
 
+EditProject.propTypes = {
+  editProject: PropTypes.func,
+  addProject: PropTypes.func,
+  isLoading: PropTypes.func,
+  closeEditModal: PropTypes.func
+}
 
-export default EditProject
+const mapStateToProps = state => ({
+  currProject: state.projects.currProject
+})
+
+export default connect(mapStateToProps, { closeEditModal, isLoading, addProject, editProject })(EditProject)
