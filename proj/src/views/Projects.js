@@ -126,7 +126,6 @@ class Projects extends Component {
   }
 
   changeLayout = (layout) => {
-    console.log(layout)
     this.setState({displayMode: layout})
   }
 
