@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
 
 import EditProject from 'components/projects/EditProject';
 import withLoader from 'components/projects/withLoader'

@@ -14,3 +14,7 @@ export const IS_LOADING = 'IS_LOADING';
 export const EDIT_PROJECT = 'EDIT_PROJECT';
 export const FETCH_PROJECTS = 'FETCH_PROJECTS'
 export const SET_PROJECTS = 'SET_PROJECTS'
+
+// Statistics
+export const FETCH_DATA = 'FETCH_DATA'
+export const SET_DATA = 'SET_DATA'

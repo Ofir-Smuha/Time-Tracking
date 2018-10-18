@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import styled from 'styled-components'
 import { flow, map, keys, flatten, uniq, filter } from 'lodash/fp';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+
+import { fetchData } from 'actions/statisticsActions'
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -10,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
 `
 
-export default class Statistics extends Component {
+class Statistics extends Component {
 
   state = {
     data: [
@@ -24,8 +27,12 @@ export default class Statistics extends Component {
     ]
   }
 
+  componentDidMount() {
+    this.props.fetchData()
+  }
+
   drawBars(){
-    let data = this.state.data || [];
+    let data = this.props.data || [];
     let dataKeys = []
     let colorCodes = ["#17607D", "#F2D8A7", "#1FCECB", "#FF9311", "#003D5C", "#F27649", "#D5CDB6", "#008C74", "#30588C", "#263138"]
 
@@ -57,3 +64,9 @@ export default class Statistics extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  data: state.statistics.data
+})
+
+export default connect(mapStateToProps, { fetchData })(Statistics)
