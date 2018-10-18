@@ -13,8 +13,8 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(
-      statisticsMiddleware,
       projectsMiddleware,
+      statisticsMiddleware,
       loggingMiddleware
     ),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

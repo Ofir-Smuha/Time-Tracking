@@ -82,7 +82,7 @@ class Projects extends Component {
               <LayoutSelector onClick={() => this.changeLayout('grid')} src={gridLayout} alt="grid-icon"/>
               <LayoutSelector onClick={() => this.changeLayout('list')} src={listLayout} alt="list-icon"/>
             </LayoutSelectors>
-            <AddButton onClick={() => this.props.openEditProject(null)}>ADD PROJECT</AddButton>
+            <AddButton onClick={() => this.props.openEditProject()}>ADD PROJECT</AddButton>
           </ButtonsContainer>
           
           <ProjectList 

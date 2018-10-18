@@ -12,7 +12,10 @@ const initialState = {
 
 
 export default handleActions({
-    [combineActions(ADD_PROJECT, EDIT_PROJECT,)]: (state, payload) =>
+    [combineActions(
+        ADD_PROJECT,
+        EDIT_PROJECT
+        )]: (state, payload) =>
         flow([
             set('displayEditModal', false),
             set('isLoading', false)

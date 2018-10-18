@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import PropTypes from 'prop-types';
 
-import { closeEditModal, isLoading, addProject, editProject} from 'actions/projectsActions';
+import * as projectActions from 'actions/projectsActions';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -83,17 +83,15 @@ const EditProject = (props) => {
   const renderTitle = () => {
     if (props.currProject) {
       return <Title>{props.currProject.name}</Title>
-    } else {
-      return <Title>Add new project</Title>
     }
+    return <Title>Add new project</Title>
   }
 
   const renderInput = () => {
     if (props.currProject) {
       return <Input type="text" name="name" defaultValue={props.currProject.name}/>
-    } else {
+      }
       return <Input type="text" name="name"/>
-    }
   }
 
   return (
@@ -122,4 +120,9 @@ const mapStateToProps = state => ({
   currProject: state.projects.currProject
 })
 
-export default connect(mapStateToProps, { closeEditModal, isLoading, addProject, editProject })(EditProject)
+export default connect(mapStateToProps, {
+  closeEditModal: projectActions.closeEditModal,
+  isLoading: projectActions.isLoading,
+  addProject: projectActions.addProject,
+  editProject: projectActions.editProject
+})(EditProject)
