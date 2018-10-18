@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
+
 import EditProject from 'components/projects/EditProject';
 import withLoader from 'components/projects/withLoader'
 import ProjectList from 'components/projects/ProjectList'
 import ProjectPreview from 'components/projects/ProjectPreview';
+import { openEditProject } from 'actions/projectsActions'
+
 import gridLayout from 'assets/images/grid.png'
 import listLayout from 'assets/images/list.png'
-import styled from 'styled-components';
-import uuidv4 from 'uuid/v4';
-import { set, unset } from 'lodash/fp';
-
-
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,69 +62,7 @@ const EditWithLoader = withLoader(EditProject)
 class Projects extends Component {
 
   state = {
-    isLoading: false,
-    displayEditModal: false,
     displayMode: 'list',
-    currProject: false,
-    projects: {
-      1: {id: 1, name: 'Project 1'},
-      2: {id: 2, name: 'Project 2'},
-      3: {id: 3, name: 'Project 3'},
-    }
-  }
-
-  openEditModal = () => {
-    this.setState({
-      displayEditModal: true
-    })
-  }
-
-  closeEditModal = () => {
-    if (this.state.currProject) {
-      this.setState({
-        displayEditModal: false,
-        currProject: false
-      })
-    } else {
-      this.setState({
-        displayEditModal: false
-      })
-    }
-  }
-  
-  submitProject = (newName, projectId) => {
-    this.setState({ isLoading: true });
-    if (projectId) { 
-      this.setState({
-        projects: set([projectId, 'name'], newName, this.state.projects),
-        displayEditModal: false,
-        isLoading: false,
-        currProject: false
-      })
-    } else {
-      const newProjectId = uuidv4()
-      const newProject = {id: newProjectId, name: newName}
-      this.setState({
-        projects: set([newProjectId], newProject, this.state.projects),
-        displayEditModal: false,
-        isLoading: false,
-      })
-    }
-  }
-
-  editProject = (project) => () => {
-    this.setState({
-      currProject: project,
-      displayEditModal: true
-    })
-  }
-  
-
-  deleteProject = (projId) => {
-
-    this.setState({
-      projects: unset([projId], this.state.projects)
-    })
   }
 
   changeLayout = (layout) => {
@@ -139,44 +79,43 @@ class Projects extends Component {
               <LayoutSelector onClick={() => this.changeLayout('grid')} src={gridLayout} alt="grid-icon"/>
               <LayoutSelector onClick={() => this.changeLayout('list')} src={listLayout} alt="list-icon"/>
             </LayoutSelectors>
-            <AddButton onClick={this.openEditModal}>ADD PROJECT</AddButton>
+            <AddButton onClick={() => this.props.openEditProject()}>ADD PROJECT</AddButton>
           </ButtonsContainer>
           
           <ProjectList 
-            projects={this.state.projects}
-            onDeleteProject={this.deleteProject}
-            onEditProject={this.editProject}
-            displayMode={ this.state.displayMode }
+            projects={this.props.projects}
+            displayMode={this.state.displayMode}
             renderProject={ (project) => {
               return (
                 <ProjectPreview
-                        key={project.id}
-                        displayMode={ this.state.displayMode }
-                        project={project}
-                        onDeleteProject={this.deleteProject}
-                        onEditProject={this.editProject}/>
-              ) }
+                  key={project.id}
+                  displayMode={ this.state.displayMode }
+                  project={project}/>
+              )}
             } 
           />
         </ContentContainer>
-
+        
         { 
-          this.state.displayEditModal && 
+          this.props.displayEditModal && 
           <EditWithLoader 
-            onCloseEditModal={this.closeEditModal}
-            onSubmitProject={this.submitProject}
-            projectId={this.state.currProject.id}
-            title={this.state.currProject.name || 'Add new project'}
-            inputValue={this.state.currProject.name}
-            isLoading={this.state.isLoading}
           />
         }
-
       </Wrapper>
     )
   }
 }
 
-export default Projects
+Projects.propTypes = {
+    projects: PropTypes.object,
+    isLoading: PropTypes.bool,
+    displayEditModal: PropTypes.bool
+}
 
+const mapStateToProps = ({ projects }) => ({
+    projects: projects.projects,
+    displayEditModal: projects.displayEditModal,
+    isLoading: projects.isLoading
+})
 
+export default connect(mapStateToProps, { openEditProject })(Projects)

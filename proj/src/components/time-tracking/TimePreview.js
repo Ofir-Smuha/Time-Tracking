@@ -51,29 +51,24 @@ class TimePreview extends Component {
   handleTimeChange = (e) => {
     if (e.target.value === '') return 
     this.props.handleChangeTime(e.target.value, this.props.date.id)
-    this.setState({
-      displayHours: true
-    })
   }
 
-  handleEditTime = () => {
-    this.setState({
-      displayHours: false
-    })
-  }
+  // handleEditTime = () => {
+  //   this.props.setDisplayHours(false)
+  // }
   
   render() {
     return (
       <PrevContainer>
-        <Dates>{moment(this.props.date.id).format('DD.MM')}</Dates>
+        <Dates>{ moment(this.props.date.id).format('DD.MM') }</Dates>
         <HourInput
           type="text"
-          active={this.state.displayHours || this.props.total} 
-          onChange={(e) => this.handleTimeChange(e)} 
+          active={this.props.total } 
+          onChange={ this.handleTimeChange } 
         />
         <HourDisplay 
-          active={this.state.displayHours || this.props.total} 
-          onClick={this.handleEditTime}>
+          active={ this.props.total } 
+          onClick={ this.handleEditTime }>
           total: { this.props.total }
         </HourDisplay>
       </PrevContainer>

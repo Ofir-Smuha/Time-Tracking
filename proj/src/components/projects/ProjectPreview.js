@@ -1,6 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import { deleteProject, openEditProject } from 'actions/projectsActions'
 
 const Project = styled.li`
   width: 25rem;
@@ -19,9 +22,8 @@ const Project = styled.li`
     width: 100px;
     height: 100px;
     margin: 5px;
-`}
+  `}
 `
-
 const ProjectName = styled.h1`
 `
 
@@ -46,24 +48,23 @@ const Delete = styled.h1`
   cursor: pointer;
 `
 
-
 const ProjectPreview = (props) => {
   return (
     <Project displayMode={props.displayMode}>
       <ProjectName>{props.project.name}</ProjectName>
       <Options displayMode={props.displayMode}>
-        <Edit onClick={ props.onEditProject(props.project)}>edit</Edit>
+        <Edit onClick={() => props.openEditProject(props.project)}>edit</Edit>
           | 
-        <Delete onClick={() => props.onDeleteProject(props.project.id)}>delete</Delete>
+        <Delete onClick={() => props.deleteProject(props.project.id)}>delete</Delete>
       </Options>
     </Project>
   )
 }
 
 ProjectPreview.propTypes = {
-  onDeleteProject: PropTypes.func,
-  onEditProject: PropTypes.func,
+  deleteProject: PropTypes.func,
+  openEditProject: PropTypes.func,
   project: PropTypes.object
 }
 
-export default ProjectPreview
+export default connect(null, { deleteProject, openEditProject })(ProjectPreview)

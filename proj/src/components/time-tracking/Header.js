@@ -36,8 +36,8 @@ const Header = (props) => {
           <h3 className="dates">{startDate} - {endDate}</h3>
         </div>
         <div className="scroll-btns">
-          <FirstButton onClick={() => props.updateOffset(-7)}>PREVIOUS</FirstButton>
-          <Button onClick={() => props.updateOffset(7)}>NEXT</Button>
+          <FirstButton onClick={() => props.handleUpdateOffset(-7)}>PREVIOUS</FirstButton>
+          <Button onClick={() => props.handleUpdateOffset(7)}>NEXT</Button>
         </div>
       </div> 
   )
