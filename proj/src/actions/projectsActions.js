@@ -1,29 +1,29 @@
-import {OPEN_EDIT_PROJECT, DELETE_PROJECT, CLOSE_EDIT_PROJECT, IS_LOADING, EDIT_PROJECT, ADD_PROJECT} from 'actions/types'
+import * as AT from 'actions/types'
 
 export const addProject = (project) => ({
-  type: ADD_PROJECT,
+  type: AT.ADD_PROJECT,
   project
 })
 
 export const deleteProject = (projectId) => ({
-  type: DELETE_PROJECT,
+  type: AT.DELETE_PROJECT,
   projectId
 })
 
 export const openEditProject = (project) => ({
-  type: OPEN_EDIT_PROJECT,
+  type: AT.OPEN_EDIT_PROJECT,
   project
 })
 
 export const closeEditModal = () => ({
-  type: CLOSE_EDIT_PROJECT
+  type: AT.CLOSE_EDIT_PROJECT
 })
 
 export const isLoading = () => ({
-  type: IS_LOADING
+  type: AT.IS_LOADING
 })
 
 export const editProject = (project) => ({
-  type: EDIT_PROJECT,
+  type: AT.EDIT_PROJECT,
   project
 })

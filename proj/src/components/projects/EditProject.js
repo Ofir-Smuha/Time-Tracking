@@ -83,17 +83,15 @@ const EditProject = (props) => {
   const renderTitle = () => {
     if (props.currProject) {
       return <Title>{props.currProject.name}</Title>
-    } else {
-      return <Title>Add new project</Title>
     }
+    return <Title>Add new project</Title>
   }
 
   const renderInput = () => {
     if (props.currProject) {
       return <Input type="text" name="name" defaultValue={props.currProject.name}/>
-    } else {
+      }
       return <Input type="text" name="name"/>
-    }
   }
 
   return (
