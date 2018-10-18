@@ -12,6 +12,14 @@ const Project = styled.li`
   font-weight: bold;
   background-color: #fff;
   box-shadow: 0 10px 15px -10px rgba(156,156,156,1);
+
+  ${({ displayMode }) => (displayMode === 'grid') && `
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+`}
 `
 
 const ProjectName = styled.h1`
@@ -20,6 +28,9 @@ const ProjectName = styled.h1`
 const Options = styled.div`
   display: flex;
   font-size: 0.9rem;
+  ${({ displayMode }) => (displayMode === 'grid') && `
+  font-size: 0.8rem;
+`}
 `
 
 const Edit = styled.h1`
@@ -38,9 +49,9 @@ const Delete = styled.h1`
 
 const ProjectPreview = (props) => {
   return (
-    <Project>
+    <Project displayMode={props.displayMode}>
       <ProjectName>{props.project.name}</ProjectName>
-      <Options>
+      <Options displayMode={props.displayMode}>
         <Edit onClick={ props.onEditProject(props.project)}>edit</Edit>
           | 
         <Delete onClick={() => props.onDeleteProject(props.project.id)}>delete</Delete>
