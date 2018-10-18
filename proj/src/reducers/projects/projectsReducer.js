@@ -7,11 +7,7 @@ const initialState = {
     displayEditModal: false,
     displayMode: 'list',
     currProject: null,
-    projects: {
-        1: {id: 1, name: 'Project 1'},
-        2: {id: 2, name: 'Project 2'},
-        3: {id: 3, name: 'Project 3'},
-    }
+    projects: {}
 };
 
 
@@ -45,5 +41,7 @@ export default handleActions({
             set(['projects', project.id], project),
             set('currProject', null),
         ])(state)
-    
+    ,
+    SET_PROJECTS: (state, {projects}) =>  
+        set('projects', projects, state)
 }, initialState);

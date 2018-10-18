@@ -1,4 +1,4 @@
-import {OPEN_EDIT_PROJECT, DELETE_PROJECT, CLOSE_EDIT_PROJECT, IS_LOADING, EDIT_PROJECT, ADD_PROJECT} from 'actions/types'
+import {OPEN_EDIT_PROJECT, DELETE_PROJECT, CLOSE_EDIT_PROJECT, IS_LOADING, EDIT_PROJECT, ADD_PROJECT, FETCH_PROJECTS} from 'actions/types'
 
 export const addProject = (project) => ({
   type: ADD_PROJECT,
@@ -27,3 +27,12 @@ export const editProject = (project) => ({
   type: EDIT_PROJECT,
   project
 })
+
+export const fetchProjects = () => ({
+    type: FETCH_PROJECTS,
+    meta: {
+        type: 'api',
+        url: 'http://ofir.com/api/projects'
+    }
+})
+

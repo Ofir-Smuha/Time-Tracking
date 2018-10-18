@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Mimic from 'mimic'
 
 import * as serviceWorker from './serviceWorker';
 
 import App from './App';
 
+// connectMimic();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

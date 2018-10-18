@@ -23,8 +23,6 @@ class TimeTracking extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('prev', prevProps)
-    console.log(this.props)
     if(prevProps.offset !== this.props.offset) {
       this.renderDates()
     }

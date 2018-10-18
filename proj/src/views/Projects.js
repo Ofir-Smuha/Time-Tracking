@@ -8,7 +8,7 @@ import EditProject from 'components/projects/EditProject';
 import withLoader from 'components/projects/withLoader'
 import ProjectList from 'components/projects/ProjectList'
 import ProjectPreview from 'components/projects/ProjectPreview';
-import { openEditProject } from 'actions/projectsActions'
+import { openEditProject, fetchProjects } from 'actions/projectsActions'
 
 import gridLayout from 'assets/images/grid.png'
 import listLayout from 'assets/images/list.png'
@@ -64,6 +64,10 @@ class Projects extends Component {
   state = {
     displayMode: 'list',
   }
+  
+  componentDidMount() {
+    this.props.fetchProjects()
+  }
 
   changeLayout = (layout) => {
     this.setState({displayMode: layout})
@@ -118,4 +122,4 @@ const mapStateToProps = ({ projects }) => ({
     isLoading: projects.isLoading
 })
 
-export default connect(mapStateToProps, { openEditProject })(Projects)
+export default connect(mapStateToProps, { openEditProject, fetchProjects })(Projects)
