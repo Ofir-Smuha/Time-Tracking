@@ -1,4 +1,10 @@
 
+// TimeTracking
+export const SET_DATES = 'SET_DATES'
+export const UPDATE_OFFSET = 'UPDATE_OFFSET'
+export const CHANGE_TIME = 'CHANGE_TIME'
+
+// Projects
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const OPEN_EDIT_PROJECT = 'OPEN_EDIT_PROJECT';
