@@ -1,5 +1,7 @@
-import { handleActions, combineActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import { set } from 'lodash/fp'
+
+import timeSet from './timeSetReducer'
 
 const initialState = {
   offset: 0,
@@ -12,12 +14,9 @@ export default handleActions({
   SET_DATES: (state, { dates }) => 
     set('dates', dates, state )
   ,
-  UPDATE_OFFSET: (state, { offset }) => {
-    if(offset === 7) {
-      return set('offset', state.offset + 7, state)
-    }
-    return set('offset', state.offset - 7, state)
-  },
+  UPDATE_OFFSET: (state, action) => 
+    set('offset', timeSet(state, action), state)
+  ,
   CHANGE_TIME: (state, {hoursValue, id}) => 
     set(['hours', id], hoursValue, state)
 

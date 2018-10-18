@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import PropTypes from 'prop-types';
 
-import { closeEditModal, isLoading, addProject, editProject} from 'actions/projectsActions';
+import * as projectActions from 'actions/projectsActions';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -120,4 +120,9 @@ const mapStateToProps = state => ({
   currProject: state.projects.currProject
 })
 
-export default connect(mapStateToProps, { closeEditModal, isLoading, addProject, editProject })(EditProject)
+export default connect(mapStateToProps, {
+  closeEditModal: projectActions.closeEditModal,
+  isLoading: projectActions.isLoading,
+  addProject: projectActions.addProject,
+  editProject: projectActions.editProject
+})(EditProject)

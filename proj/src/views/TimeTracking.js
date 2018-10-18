@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import moment from 'moment';
-import {set} from 'lodash/fp'
 
 import { setDates, updateOffset, changeTime } from 'actions/timeTrackingActions'
 
@@ -23,20 +22,12 @@ class TimeTracking extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('prev', prevProps)
-    console.log(this.props)
     if(prevProps.offset !== this.props.offset) {
       this.renderDates()
     }
   }
 
   handleChangeTime = (hoursValue, id) => {
-    // const hours = { ...this.state.hours };
-
-    // this.setState({
-    //   hours: set([id], hoursValue, hours)
-    // })
-
     this.props.changeTime(hoursValue, id)
   }
 
