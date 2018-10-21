@@ -29,7 +29,6 @@ export const editProject = (project) => ({
 })
 
 export const fetchProjects = () => ({
-  type: AT.API_REQUEST,
   payload: {
     onSuccess: setProjects
   },

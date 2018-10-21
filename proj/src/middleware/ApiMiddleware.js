@@ -1,18 +1,29 @@
-import axios from 'axios'
+import axios from 'axios';
+import { get } from 'lodash/fp';
 
-const ApiMiddleware = ({dispatch}) => next => action => {
-  if (!action.meta || action.meta.type !== 'api') {
-    console.log('going to next')
+const apiMiddleware = ({dispatch}) => next => action => {
+  if (get('meta.type', action) !== 'api') { 
     return next(action);
-  }
+  };
   
-  axios.get(action.meta.url)
-    .then(({data}) => dispatch(action.payload.onSuccess(data)))
-    .catch( err => console.log('error: ', err))
-  if (action.meta.method === 'get') {}
-  if (action.meta.method === 'post') {}
-  if (action.meta.method === 'delete') {}
-  if (action.meta.method === 'put') {}
-}
+  const { url, method = 'get' } = action.meta;
+  const { onSuccess, onError} = action.payload
 
-export default ApiMiddleware
+  axios.request({url, method})
+    .then(({data}) => {
+      if(Array.isArray(onSuccess)) {
+        onSuccess.forEach(action => dispatch(action(data)))
+      } else {
+        dispatch(onSuccess(data))
+      }
+    })
+    .catch( err => {
+      if(Array.isArray(onError)) {
+        onError.forEach(action => dispatch(action()))
+      } else {
+        dispatch(onError(err))
+      };
+    });
+};
+
+export default apiMiddleware;
