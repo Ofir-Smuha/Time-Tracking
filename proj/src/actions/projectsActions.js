@@ -36,6 +36,7 @@ export const fetchProjects = () => ({
   meta: {
       type: 'api',
       url: 'http://ofir.com/api/projects',
+      databaseURL: 'projects'
       //method: post / put / detele 
   }
 })

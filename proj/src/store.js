@@ -2,7 +2,7 @@ import { createStore, compose, applyMiddleware} from 'redux'
 // import persistState from 'redux-localstorage'
 
 import rootReducer from 'reducers/root'
-import projectsMiddleware from 'middleware/projectsMiddleware';
+import ApiMiddleware from 'middleware/ApiMiddleware';
 
 const initialState = {};
 
@@ -11,7 +11,7 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(
-      projectsMiddleware
+      ApiMiddleware
     ),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
