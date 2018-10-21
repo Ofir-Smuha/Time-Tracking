@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid/v4';
 
 import EditProject from 'components/projects/EditProject';
 import withLoader from 'components/projects/withLoader'
 import ProjectList from 'components/projects/ProjectList'
 import ProjectPreview from 'components/projects/ProjectPreview';
-import { openEditProject } from 'actions/projectsActions'
+import { openEditProject, fetchProjects } from 'actions/projectsActions'
 
 import gridLayout from 'assets/images/grid.png'
 import listLayout from 'assets/images/list.png'
@@ -64,6 +63,10 @@ class Projects extends Component {
   state = {
     displayMode: 'list',
   }
+  
+  componentDidMount() {
+    this.props.fetchProjects()
+  }
 
   changeLayout = (layout) => {
     this.setState({displayMode: layout})
@@ -113,9 +116,12 @@ Projects.propTypes = {
 }
 
 const mapStateToProps = ({ projects }) => ({
-    projects: projects.projects,
+    projects: projects.items,
     displayEditModal: projects.displayEditModal,
     isLoading: projects.isLoading
 })
 
-export default connect(mapStateToProps, { openEditProject })(Projects)
+export default connect(mapStateToProps, {
+  openEditProject,
+  fetchProjects
+  })(Projects)

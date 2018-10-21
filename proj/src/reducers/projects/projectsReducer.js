@@ -2,16 +2,13 @@ import { handleActions, combineActions } from 'redux-actions';
 import { set, unset, flow } from 'lodash/fp'
 
 import { ADD_PROJECT, EDIT_PROJECT } from 'actions/types'
+
 const initialState = {
     isLoading: false,
     displayEditModal: false,
     displayMode: 'list',
     currProject: null,
-    projects: {
-        1: {id: 1, name: 'Project 1'},
-        2: {id: 2, name: 'Project 2'},
-        3: {id: 3, name: 'Project 3'},
-    }
+    items: {}
 };
 
 
@@ -26,10 +23,10 @@ export default handleActions({
         ])(state)
     ,
     ADD_PROJECT: (state, {project}) => 
-        set(['projects', project.id], project, state)
+        set(['items', project.id], project, state)
     ,
     DELETE_PROJECT: (state, {projectId}) => 
-        unset(`projects.${projectId}`, state)
+        unset(['items', projectId], state)
     ,
     OPEN_EDIT_PROJECT: (state, {project}) => 
         flow([
@@ -45,8 +42,11 @@ export default handleActions({
     ,
     EDIT_PROJECT: (state, {project}) => 
         flow([
-            set(['projects', project.id], project),
+            set(['items', project.id], project),
             set('currProject', null),
         ])(state)
-    
+    ,
+    SET_PROJECTS: (state, {projects}) =>  {
+        return set('items', projects, state)
+    }
 }, initialState);

@@ -1,10 +1,8 @@
 import { createStore, compose, applyMiddleware} from 'redux'
-import thunk from 'redux-thunk';
-import persistState from 'redux-localstorage'
+// import persistState from 'redux-localstorage'
 
 import rootReducer from 'reducers/root'
-
-const middleWare = [thunk]
+import apiMiddleware from 'middleware/apiMiddleware';
 
 const initialState = {};
 
@@ -12,8 +10,9 @@ const store = createStore(
   rootReducer,
   initialState,
   compose(
-    applyMiddleware(...middleWare),
-    persistState(),
+    applyMiddleware(
+      apiMiddleware
+    ),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 )

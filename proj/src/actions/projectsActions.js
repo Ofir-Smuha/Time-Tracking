@@ -27,3 +27,24 @@ export const editProject = (project) => ({
   type: AT.EDIT_PROJECT,
   project
 })
+
+export const fetchProjects = () => ({
+  type: AT.API_REQUEST,
+  payload: {
+    onSuccess: setProjects,
+    onError: setError
+  },
+  meta: {
+      type: 'api',
+      url: 'http://ofir.com/api/projects',
+  }
+})
+
+export const setProjects = (projects) => ({
+  type: AT.SET_PROJECTS,
+  projects
+})
+
+export const setError = () => ({
+
+})
