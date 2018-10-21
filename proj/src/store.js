@@ -2,8 +2,8 @@ import { createStore, compose, applyMiddleware} from 'redux'
 // import persistState from 'redux-localstorage'
 
 import rootReducer from 'reducers/root'
-import ApiMiddleware from 'middleware/ApiMiddleware';
-import firebaseMiddleware from 'middleware/firebaseMiddleware'
+import apiMiddleware from 'middleware/ApiMiddleware';
+// import firebaseMiddleware from 'middleware/firebaseMiddleware'
 
 const initialState = {};
 
@@ -12,7 +12,7 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(
-      ApiMiddleware,
+      apiMiddleware,
       // firebaseMiddleware
     ),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
