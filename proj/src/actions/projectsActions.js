@@ -29,10 +29,18 @@ export const editProject = (project) => ({
 })
 
 export const fetchProjects = () => ({
-    type: AT.FETCH_PROJECTS,
-    meta: {
-        type: 'api',
-        url: 'http://ofir.com/api/projects'
-    }
+  type: AT.API_REQUEST,
+  payload: {
+    onSuccess: setProjects
+  },
+  meta: {
+      type: 'api',
+      url: 'http://ofir.com/api/projects',
+      //method: post / put / detele 
+  }
 })
 
+export const setProjects = (projects) => ({
+  type: AT.SET_PROJECTS,
+  projects
+})

@@ -18,3 +18,6 @@ export const SET_PROJECTS = 'SET_PROJECTS'
 // Statistics
 export const FETCH_DATA = 'FETCH_DATA'
 export const SET_DATA = 'SET_DATA'
+
+// API request 
+export const API_REQUEST = 'API_REQUEST';

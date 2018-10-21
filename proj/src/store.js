@@ -1,10 +1,8 @@
 import { createStore, compose, applyMiddleware} from 'redux'
-import persistState from 'redux-localstorage'
+// import persistState from 'redux-localstorage'
 
 import rootReducer from 'reducers/root'
-import loggingMiddleware from 'middleware/loggingMiddleware';
 import projectsMiddleware from 'middleware/projectsMiddleware';
-import statisticsMiddleware from 'middleware/statisticsMiddleware';
 
 const initialState = {};
 
@@ -13,9 +11,7 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(
-      projectsMiddleware,
-      statisticsMiddleware,
-      loggingMiddleware
+      projectsMiddleware
     ),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
