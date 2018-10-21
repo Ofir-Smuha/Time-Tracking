@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { get } from 'lodash/fp';
 
-const apiMiddleware = ({dispatch}) => next => action => {
+const dispatchActions  = (dispatch, arr, data) => {
+  arr.forEach(action => dispatch(action(data)))
+}
 
+const apiMiddleware = ({dispatch}) => next => action => {
   if (!get('meta.type', action)) { 
     return next(action);
   };
@@ -13,18 +16,18 @@ const apiMiddleware = ({dispatch}) => next => action => {
   axios.request({url, method})
     .then(({data}) => {
       if(Array.isArray(onSuccess)) {
-        onSuccess.forEach(action => dispatch(action(data)))
+        dispatchActions(dispatch, onSuccess, data)
       } else {
         dispatch(onSuccess(data))
       }
-      })
-      .catch( err => {
-        if(Array.isArray(onError)) {
-          onError.forEach(action => dispatch(action()))
-        } else {
-          dispatch(onError())
-        };
-      });
+    })
+    .catch( err => {
+      if(Array.isArray(onError)) {
+        dispatchActions(dispatch, onError, err)
+      } else {
+        dispatch(onError())
+      };
+    });
 };
 
 export default apiMiddleware;

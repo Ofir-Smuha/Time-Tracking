@@ -26,7 +26,7 @@ export default handleActions({
         set(['items', project.id], project, state)
     ,
     DELETE_PROJECT: (state, {projectId}) => 
-        unset(`items.${projectId}`, state)
+        unset(['items', projectId], state)
     ,
     OPEN_EDIT_PROJECT: (state, {project}) => 
         flow([
