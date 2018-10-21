@@ -121,4 +121,9 @@ const mapStateToProps = ({ projects }) => ({
     isLoading: projects.isLoading
 })
 
-export default connect(mapStateToProps, { openEditProject, fetchProjects })(Projects)
+export default connect(
+  mapStateToProps,
+  {
+  openEditProject,
+  fetchProjects
+  })(Projects)
