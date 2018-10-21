@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { flow, map, keys, flatten, uniq, filter } from 'lodash/fp';
 import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
-import { fetchData } from 'actions/statisticsActions'
+import { fetchStatistics } from 'actions/statisticsActions'
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -15,18 +15,13 @@ const Wrapper = styled.div`
 
 class Statistics extends Component {
 
-  state = {}
-
   componentDidMount() {
-    this.props.fetchData()
+    this.props.fetchStatistics()
   }
 
   drawBars(){
-
-    let dataKeys = []
-    let colorCodes = ["#17607D", "#F2D8A7", "#1FCECB", "#FF9311", "#003D5C", "#F27649", "#D5CDB6", "#008C74", "#30588C", "#263138"]
-
-    dataKeys = flow([
+    const colorCodes = ["#17607D", "#F2D8A7", "#1FCECB", "#FF9311", "#003D5C", "#F27649", "#D5CDB6", "#008C74", "#30588C", "#263138"]
+    const dataKeys = flow([
       map(keys),
       flatten,
       uniq,
@@ -59,4 +54,4 @@ const mapStateToProps = state => ({
   chartData: state.statistics
 })
 
-export default connect(mapStateToProps, { fetchData })(Statistics)
+export default connect(mapStateToProps, { fetchStatistics })(Statistics)

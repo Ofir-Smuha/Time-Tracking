@@ -1,9 +1,9 @@
 import * as AT from 'actions/types'
 
-export const fetchData = () => ({
+export const fetchStatistics = () => ({
   type: AT.API_REQUEST,
   payload: {
-    onSuccess: setData,
+    onSuccess: setStatistics,
     onError: setError
   },
   meta: {
@@ -12,8 +12,8 @@ export const fetchData = () => ({
   }
 })
 
-export const setData = (data) => ({
-  type: AT.SET_DATA,
+export const setStatistics = (data) => ({
+  type: AT.SET_STATISTICS,
   data
 })
 

@@ -15,10 +15,16 @@ const apiMiddleware = ({dispatch}) => next => action => {
       if(Array.isArray(onSuccess)) {
         onSuccess.forEach(action => dispatch(action(data)))
       } else {
-        dispatch(action.payload.onSuccess(data))
+        dispatch(onSuccess(data))
       }
       })
-      .catch( err => dispatch(onError(err)));
+      .catch( err => {
+        if(Array.isArray(onError)) {
+          onError.forEach(action => dispatch(action()))
+        } else {
+          dispatch(onError())
+        };
+      });
 };
 
 export default apiMiddleware;

@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 const initialState = [];
 
 export default handleActions({
-  SET_DATA: (state, {data}) => {
+  SET_STATISTICS: (state, {data}) => {
     return data
   }
 }, initialState);

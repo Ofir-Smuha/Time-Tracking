@@ -16,8 +16,7 @@ export const FETCH_PROJECTS = 'FETCH_PROJECTS'
 export const SET_PROJECTS = 'SET_PROJECTS'
 
 // Statistics
-export const FETCH_DATA = 'FETCH_DATA'
-export const SET_DATA = 'SET_DATA'
+export const SET_STATISTICS = 'SET_STATISTICS'
 
 // API request 
 export const API_REQUEST = 'API_REQUEST';
