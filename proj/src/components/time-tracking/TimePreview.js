@@ -53,10 +53,6 @@ class TimePreview extends Component {
     this.props.handleChangeTime(e.target.value, this.props.date.id)
   }
 
-  // handleEditTime = () => {
-  //   this.props.setDisplayHours(false)
-  // }
-  
   render() {
     return (
       <PrevContainer>

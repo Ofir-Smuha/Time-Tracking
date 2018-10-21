@@ -116,9 +116,12 @@ Projects.propTypes = {
 }
 
 const mapStateToProps = ({ projects }) => ({
-    projects: projects.projects,
+    projects: projects.items,
     displayEditModal: projects.displayEditModal,
     isLoading: projects.isLoading
 })
 
-export default connect(mapStateToProps, { openEditProject, fetchProjects })(Projects)
+export default connect(mapStateToProps, {
+  openEditProject,
+  fetchProjects
+  })(Projects)
