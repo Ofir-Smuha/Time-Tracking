@@ -14,7 +14,7 @@ const AppRouter = () => (
       <Route path="/projects" component={Projects}/>
       <Route path="/time-tracking" component={TimeTracking}/>
       <Route path="/statistics" component={Statistics}/>
-      <Redirect from="/" to="/signup"/>
+      <Redirect from="/" to="/login"/>
     </Switch>
   </Router>
 )

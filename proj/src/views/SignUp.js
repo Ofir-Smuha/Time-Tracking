@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
-
-import { setSignUp } from 'actions/userActions'
+import { setLoggedIn } from 'actions/userActions'
 import firebase from 'config/firebase'
 
 const Wrapper = styled.div`
@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 const LoginContainer = styled.form`
   width: 300px;
   padding: 1.2rem 1.5rem;
@@ -38,7 +37,6 @@ const Input = styled.input`
   padding: 0.8rem 0.6rem;
   min-width: 15rem;
 `
-
 const Button = styled.button`
   background-color: ${({theme}) => theme.main}
   border-radius: 5px;
@@ -50,25 +48,25 @@ const Button = styled.button`
   margin-bottom: 1.5rem;
   cursor: pointer;
 `
-
 const Label = styled.label`
   font-size: 1rem;
   padding-bottom: 0.3rem;
   font-weight: bold;
 `
 
-class SignUp extends Component {
+const SignUp = (props) =>  {
   
-  state = {}
-
-  handleSignUp = (e) => {
+  const handleSignUp = (e) => {
     e.preventDefault()
+
     const email = e.target.elements[0].value;
     const password = e.target.elements[1].value;
+
     if (!email || !password) return 
-    console.log('passed')
-    firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
-      console.log(user)
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(({user}) => {
+      const { email, uid} = user
+      props.setLoggedIn(email, uid)
     })
     .catch(error => {
       // Handle Errors here.
@@ -78,10 +76,9 @@ class SignUp extends Component {
     });
   }
 
-  render() {
     return (
       <Wrapper>
-        <LoginContainer onSubmit={this.handleSignUp}>
+        <LoginContainer onSubmit={handleSignUp}>
           <Title>Sign-Up</Title>
           <Label>Email</Label>
           <Input type="text" placeholder="Email"/>
@@ -92,7 +89,10 @@ class SignUp extends Component {
         </LoginContainer>
       </Wrapper>
     )
-  }
 }
 
-export default connect(null, { setSignUp })(SignUp)
+SignUp.propTypes = {
+  setLoggedIn: PropTypes.func
+}
+
+export default connect(null, { setLoggedIn })(SignUp)

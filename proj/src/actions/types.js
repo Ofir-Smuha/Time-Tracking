@@ -22,3 +22,5 @@ export const SET_STATISTICS = 'SET_STATISTICS'
 export const API_REQUEST = 'API_REQUEST';
 
 // Users
+export const SET_LOGGED_IN = 'SET_LOGGED_IN'
+export const SET_LOGGED_OUT = 'SET_LOGGED_OUT'

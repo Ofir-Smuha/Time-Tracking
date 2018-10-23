@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
-import loginReducer from 'reducers/login/loginReducer'
+import userReducer from 'reducers/users/userReducer'
 import projectsReducer from 'reducers/projects/projectsReducer'
 import statistics from 'reducers/statistics/statisticsReducer'
 import timeTrackingReducer from 'reducers/time-tracking/timeTrackingReducer'
 
 export default combineReducers({
-  login: loginReducer,
+  user: userReducer,
   projects: projectsReducer,
   statistics: statistics,
   times: timeTrackingReducer

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect} from 'react-router-dom'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
 
-import { setLogin } from 'actions/userActions'
+import { setLoggedIn } from 'actions/userActions'
 import firebase from 'config/firebase'
 
 const Wrapper = styled.div`
@@ -13,7 +14,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-
 const LoginContainer = styled.form`
   width: 300px;
   padding: 1.2rem 1.5rem;
@@ -37,7 +37,6 @@ const Input = styled.input`
   padding: 0.8rem 0.6rem;
   min-width: 15rem;
 `
-
 const Button = styled.button`
   background-color: ${({theme}) => theme.main}
   border-radius: 5px;
@@ -49,7 +48,6 @@ const Button = styled.button`
   margin-bottom: 1.5rem;
   cursor: pointer;
 `
-
 const Label = styled.label`
   font-size: 1rem;
   padding-bottom: 0.3rem;
@@ -57,28 +55,49 @@ const Label = styled.label`
 `
 
 class Login extends Component {
-  
-  state = {}
+
+  state = {
+    loggedIn: false
+  }
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const { email, uid } = user
+        this.props.setLoggedIn(email, uid)
+        this.setState({
+          loggedIn: true
+        })
+      }
+    });
+  }
 
   handleLogin = (e) => {
     e.preventDefault()
     const email = e.target.elements[0].value;
     const password = e.target.elements[1].value;
     if (!email || !password) return 
-    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
-      console.log('user logged in:', user)
+    firebase.auth().signInWithEmailAndPassword(email, password).then(({user}) => {
+      const { email, uid} = user
+      this.props.setLoggedIn(email, uid)
+      this.setState({
+        loggedIn: true
+      })
     })
     .catch(function(error) {
       // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      // const errorCode = error.code;
+      const errorMessage = error.message;
       alert(errorMessage)
     });
   }
 
   render() {
+    if(this.state.loggedIn) {
+      return <Redirect to='/projects' />
+    }
     return (
-      <Wrapper>
+     <Wrapper>
         <LoginContainer onSubmit={this.handleLogin}>
           <Title>Login</Title>
           <Label>Email</Label>
@@ -93,4 +112,8 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { setLogin })(Login)
+Login.propTypes = {
+  setLoggedIn: PropTypes.func
+}
+
+export default connect(null, { setLoggedIn })(Login)

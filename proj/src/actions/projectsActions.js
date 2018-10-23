@@ -1,39 +1,5 @@
 import * as AT from 'actions/types'
 
-export const openEditProject = (project) => ({
-  type: AT.OPEN_EDIT_PROJECT,
-  project
-})
-
-export const closeEditModal = () => ({
-  type: AT.CLOSE_EDIT_PROJECT
-})
-
-export const isLoading = () => ({
-  type: AT.IS_LOADING
-})
-
-// export const fetchProjects = () => ({
-//   payload: {
-//     onSuccess: setProjects,
-//     onError: setError
-//   },
-//   meta: {
-//       type: 'api',
-//       url: 'http://ofir.com/api/projects',
-//   }
-// })
-
-// export const setProjects = (data) => ({
-//   type: AT.SET_PROJECTS,
-//   projects : data.projects
-// })
-
-// export const setError = () => ({
-
-// })
-
-// Firebase 
 export const fetchProjects = () => ({
   payload: {
     onSuccess: setProjects,
@@ -103,6 +69,19 @@ export const setEditedProject = (project) => ({
 export const editProject = (project) => ({
   type: AT.EDIT_PROJECT,
   project
+})
+
+export const openEditProject = (project) => ({
+  type: AT.OPEN_EDIT_PROJECT,
+  project
+})
+
+export const closeEditModal = () => ({
+  type: AT.CLOSE_EDIT_PROJECT
+})
+
+export const isLoading = () => ({
+  type: AT.IS_LOADING
 })
 
 // Generic set error
