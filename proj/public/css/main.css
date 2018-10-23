@@ -3,7 +3,9 @@
 @import 'times/times-list.css';
 @import 'times/times-prev.css';
 @import 'times/header.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 
 body {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
 }
