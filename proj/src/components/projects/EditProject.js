@@ -72,11 +72,11 @@ const EditProject = (props) => {
     if (props.currProject) { 
       const editedProject = { ...props.currProject };
       editedProject.name = inputValue
-      props.editProject(editedProject)
+      props.setEditedProject(editedProject)
     } else {
       const newProjectId = uuidv4()
       const newProject = {id: newProjectId, name: inputValue}
-      props.addProject(newProject)
+      props.setAddedProject(newProject)
     }
   }
 
@@ -110,8 +110,8 @@ const EditProject = (props) => {
 }
 
 EditProject.propTypes = {
-  editProject: PropTypes.func,
-  addProject: PropTypes.func,
+  setEditedProject: PropTypes.func,
+  setAddedProject: PropTypes.func,
   isLoading: PropTypes.func,
   closeEditModal: PropTypes.func
 }
@@ -123,6 +123,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   closeEditModal: projectActions.closeEditModal,
   isLoading: projectActions.isLoading,
-  addProject: projectActions.addProject,
-  editProject: projectActions.editProject
+  setAddedProject: projectActions.setAddedProject,
+  setEditedProject: projectActions.setEditedProject
 })(EditProject)

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Mimic from 'mimic';
+// import Mimic from 'mimic';
 
 import * as serviceWorker from './serviceWorker';
 

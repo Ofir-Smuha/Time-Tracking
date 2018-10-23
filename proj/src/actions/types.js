@@ -20,3 +20,5 @@ export const SET_STATISTICS = 'SET_STATISTICS'
 
 // API request 
 export const API_REQUEST = 'API_REQUEST';
+
+// Users

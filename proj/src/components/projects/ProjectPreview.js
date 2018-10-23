@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { deleteProject, openEditProject } from 'actions/projectsActions'
+import { setDeletedProject, openEditProject } from 'actions/projectsActions'
 
 const Project = styled.li`
   width: 25rem;
@@ -55,16 +55,16 @@ const ProjectPreview = (props) => {
       <Options displayMode={props.displayMode}>
         <Edit onClick={() => props.openEditProject(props.project)}>edit</Edit>
           | 
-        <Delete onClick={() => props.deleteProject(props.project.id)}>delete</Delete>
+        <Delete onClick={() => props.setDeletedProject(props.project.id)}>delete</Delete>
       </Options>
     </Project>
   )
 }
 
 ProjectPreview.propTypes = {
-  deleteProject: PropTypes.func,
+  setDeletedProject: PropTypes.func,
   openEditProject: PropTypes.func,
   project: PropTypes.object
 }
 
-export default connect(null, { deleteProject, openEditProject })(ProjectPreview)
+export default connect(null, { setDeletedProject, openEditProject })(ProjectPreview)

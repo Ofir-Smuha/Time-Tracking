@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { setLogin } from 'actions/userActions'
+
+import { setSignUp } from 'actions/userActions'
 import firebase from 'config/firebase'
 
 const Wrapper = styled.div`
@@ -56,41 +57,42 @@ const Label = styled.label`
   font-weight: bold;
 `
 
-class Login extends Component {
+class SignUp extends Component {
   
   state = {}
 
-  handleLogin = (e) => {
+  handleSignUp = (e) => {
     e.preventDefault()
     const email = e.target.elements[0].value;
     const password = e.target.elements[1].value;
     if (!email || !password) return 
-    firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
-      console.log('user logged in:', user)
+    console.log('passed')
+    firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+      console.log(user)
     })
-    .catch(function(error) {
+    .catch(error => {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      alert(errorMessage)
+      console.log('error code',errorCode, 'error msg', errorMessage)
     });
   }
 
   render() {
     return (
       <Wrapper>
-        <LoginContainer onSubmit={this.handleLogin}>
-          <Title>Login</Title>
+        <LoginContainer onSubmit={this.handleSignUp}>
+          <Title>Sign-Up</Title>
           <Label>Email</Label>
           <Input type="text" placeholder="Email"/>
           <Label>Password</Label>
           <Input type="text" placeholder="Password"/>
           <Button>LOGIN</Button>
-          <p>Dont have an account? <Link to="/signup">Sign-up</Link></p>
+          <p>Already have an account? <Link to="/login">Login</Link></p>
         </LoginContainer>
       </Wrapper>
     )
   }
 }
 
-export default connect(null, { setLogin })(Login)
+export default connect(null, { setSignUp })(SignUp)
