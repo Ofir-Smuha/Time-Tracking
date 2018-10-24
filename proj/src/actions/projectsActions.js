@@ -6,7 +6,7 @@ export const fetchProjects = () => ({
     onError: setError
   },
   meta: {
-      type: 'database',
+      type: 'firebase',
       databaseURL: 'projects',
       method: 'get'
   }
@@ -24,7 +24,7 @@ export const setAddedProject = (item) => ({
     item
   },
   meta: {
-      type: 'database',
+      type: 'firebase',
       databaseURL: 'projects',
       method: 'post'
   }
@@ -42,7 +42,7 @@ export const setDeletedProject = (projectId) => ({
     itemId: projectId
   },
   meta: {
-      type: 'database',
+      type: 'firebase',
       databaseURL: 'projects',
       method: 'delete'
   }
@@ -60,7 +60,7 @@ export const setEditedProject = (project) => ({
     item: project
   },
   meta: {
-      type: 'database',
+      type: 'firebase',
       databaseURL: 'projects',
       method: 'put'
   }

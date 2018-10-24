@@ -56,33 +56,36 @@ const Label = styled.label`
 
 class Login extends Component {
 
-  state = {
-    loggedIn: false
-  }
+  state  = {
+    email: '',
+    password: ''
+  };
 
   componentDidMount(){
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        const { email, uid } = user
+        const { email, uid } = user;
         this.props.setLoggedIn(email, uid)
-        this.setState({
-          loggedIn: true
-        })
       }
     });
   }
 
+  handleInputChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    this.setState({
+      [name]: value
+    })
+  };
+
   handleLogin = (e) => {
-    e.preventDefault()
-    const email = e.target.elements[0].value;
-    const password = e.target.elements[1].value;
-    if (!email || !password) return 
+    e.preventDefault();
+    const email = this.state.email;
+    const password = this.state.password;
+    if (!email || !password) return ;
     firebase.auth().signInWithEmailAndPassword(email, password).then(({user}) => {
-      const { email, uid} = user
+      const { email, uid} = user;
       this.props.setLoggedIn(email, uid)
-      this.setState({
-        loggedIn: true
-      })
     })
     .catch(function(error) {
       // Handle Errors here.
@@ -90,10 +93,10 @@ class Login extends Component {
       const errorMessage = error.message;
       alert(errorMessage)
     });
-  }
+  };
 
   render() {
-    if(this.state.loggedIn) {
+    if(this.props.currentUser) {
       return <Redirect to='/projects' />
     }
     return (
@@ -101,9 +104,21 @@ class Login extends Component {
         <LoginContainer onSubmit={this.handleLogin}>
           <Title>Login</Title>
           <Label>Email</Label>
-          <Input type="text" placeholder="Email"/>
+          <Input
+                 type="text"
+                 name="email"
+                 placeholder="Email"
+                 value={this.state.email}
+                 onChange={this.handleInputChange}
+          />
           <Label>Password</Label>
-          <Input type="text" placeholder="Password"/>
+          <Input
+                 type="text"
+                 name="password"
+                 placeholder="Password"
+                 value={this.state.password}
+                 onChange={this.handleInputChange}
+          />
           <Button>LOGIN</Button>
           <p>Dont have an account? <Link to="/signup">Sign-up</Link></p>
         </LoginContainer>
@@ -116,4 +131,8 @@ Login.propTypes = {
   setLoggedIn: PropTypes.func
 }
 
-export default connect(null, { setLoggedIn })(Login)
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser
+})
+
+export default connect(mapStateToProps, { setLoggedIn })(Login)

@@ -11,7 +11,7 @@ const dispatchActions = (dispatch, actionContainer, data) => {
 };
 
 const firebaseMiddleware = ({dispatch}) => next => action => {
-  if (get('meta.type', action) !== 'database') {
+  if (get('meta.type', action) !== 'firebase') {
     return next(action);
   }
 

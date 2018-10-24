@@ -31,13 +31,13 @@ const NavBar = (props) => {
     });
   }
   
-  if (!props.currUser){
+  if (!props.currentUser){
     return null
   }
 
   return (
     <NavBarContainer>
-      <LoggedUser>{props.currUser.email}</LoggedUser>
+      <LoggedUser>{props.currentUser.email}</LoggedUser>
       <Button onClick={setSignOut}>Log-out</Button>
     </NavBarContainer>
   )
@@ -48,7 +48,7 @@ NavBar.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  currUser: state.user.currUser
+  currentUser: state.user.currentUser
 })
 
 export default connect(mapStateToProps, { setLoggedOut })(NavBar)
