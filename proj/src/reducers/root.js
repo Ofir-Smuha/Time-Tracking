@@ -6,7 +6,7 @@ import statistics from 'reducers/statistics/statisticsReducer'
 import timeTrackingReducer from 'reducers/time-tracking/timeTrackingReducer'
 
 export default combineReducers({
-  user: userReducer,
+  currentUser: userReducer,
   projects: projectsReducer,
   statistics: statistics,
   times: timeTrackingReducer

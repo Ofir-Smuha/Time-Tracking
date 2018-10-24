@@ -1,14 +1,17 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { set } from 'lodash/fp'
+import { set, flow } from 'lodash/fp'
 
 const initialState = {
-  currentUser: null
-};
+  email: null,
+  userId: null
+}
 
 export default handleActions({
-  SET_LOGGED_IN: (state, { email, userId }) =>
-    set('currentUser', {email: email, userId: userId}, state)
+  SET_LOGGED_IN: (state, { email, userId }) => {
+    return {email, userId}
+  }
   ,
-  SET_LOGGED_OUT: (state, action) =>
-    set('currentUser', null , state)
+  SET_LOGGED_OUT: (state, action) => {
+    return {email: null, userId: null}
+  }
 }, initialState);

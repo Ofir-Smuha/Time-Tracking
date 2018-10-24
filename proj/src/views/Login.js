@@ -70,9 +70,8 @@ class Login extends Component {
     });
   }
 
-  handleInputChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
+  handleInputChange = ({target}) => {
+    const { value, name } = target
     this.setState({
       [name]: value
     })
@@ -80,9 +79,10 @@ class Login extends Component {
 
   handleLogin = (e) => {
     e.preventDefault();
-    const email = this.state.email;
-    const password = this.state.password;
-    if (!email || !password) return ;
+    const { email, password } = this.state;
+    if (!email || !password) {
+      return
+    }
     firebase.auth().signInWithEmailAndPassword(email, password).then(({user}) => {
       const { email, uid} = user;
       this.props.setLoggedIn(email, uid)
@@ -96,7 +96,7 @@ class Login extends Component {
   };
 
   render() {
-    if(this.props.currentUser) {
+    if(this.props.currentUser.email) {
       return <Redirect to='/projects' />
     }
     return (
@@ -131,8 +131,8 @@ Login.propTypes = {
   setLoggedIn: PropTypes.func
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = ({currentUser}) => ({
+  currentUser
 })
 
 export default connect(mapStateToProps, { setLoggedIn })(Login)

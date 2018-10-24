@@ -31,7 +31,7 @@ const NavBar = (props) => {
     });
   }
   
-  if (!props.currentUser){
+  if (!props.currentUser.email){
     return null
   }
 
@@ -47,8 +47,8 @@ NavBar.propTypes = {
   setLoggedOut: PropTypes.func
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = ({currentUser}) => ({
+  currentUser
 })
 
 export default connect(mapStateToProps, { setLoggedOut })(NavBar)
