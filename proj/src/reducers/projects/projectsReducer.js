@@ -22,8 +22,9 @@ export default handleActions({
             set('isLoading', false)
         ])(state)
     ,
-    ADD_PROJECT: (state, {project}) => 
-        set(['items', project.id], project, state)
+    ADD_PROJECT: (state, {project}) => {
+        return set(['items', project.id], project, state)
+    }
     ,
     DELETE_PROJECT: (state, {projectId}) => 
         unset(['items', projectId], state)

@@ -1,17 +1,17 @@
-import { SET_DATES, UPDATE_OFFSET, CHANGE_TIME } from 'actions/types'
+import * as AT from 'actions/types'
 
 export const setDates = (dates) => ({
-  type: SET_DATES,
+  type: AT.SET_DATES,
   dates
 })
 
 export const updateOffset = (offset) => ({
-  type: UPDATE_OFFSET,
+  type: AT.UPDATE_OFFSET,
   offset
 })
 
 export const changeTime = (hoursValue, id) => ({
-  type: CHANGE_TIME,
+  type: AT.CHANGE_TIME,
   hoursValue,
   id
 })

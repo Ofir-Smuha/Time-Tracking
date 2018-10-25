@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import NavBar from 'components/users/NavBar'
 import EditProject from 'components/projects/EditProject';
 import withLoader from 'components/projects/withLoader'
 import ProjectList from 'components/projects/ProjectList'
@@ -75,6 +76,7 @@ class Projects extends Component {
   render() {
     return (
       <Wrapper>
+        <NavBar/>
         <Title>Projects</Title>
         <ContentContainer>
           <ButtonsContainer>

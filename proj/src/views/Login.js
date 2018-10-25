@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link, Redirect} from 'react-router-dom'
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
+
+import { setLoggedIn } from 'actions/userActions'
+import firebase from 'config/firebase'
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -8,8 +14,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `
-
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   width: 300px;
   padding: 1.2rem 1.5rem;
   background-color: #F9F9F9;
@@ -32,7 +37,6 @@ const Input = styled.input`
   padding: 0.8rem 0.6rem;
   min-width: 15rem;
 `
-
 const Button = styled.button`
   background-color: ${({theme}) => theme.main}
   border-radius: 5px;
@@ -42,8 +46,8 @@ const Button = styled.button`
   font-weight: bold;
   padding: 0.8rem 0.6rem;
   margin-bottom: 1.5rem;
+  cursor: pointer;
 `
-
 const Label = styled.label`
   font-size: 1rem;
   padding-bottom: 0.3rem;
@@ -51,20 +55,84 @@ const Label = styled.label`
 `
 
 class Login extends Component {
+
+  state  = {
+    email: '',
+    password: ''
+  };
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const { email, uid } = user;
+        this.props.setLoggedIn(email, uid)
+      }
+    });
+  }
+
+  handleInputChange = ({target}) => {
+    const { value, name } = target
+    this.setState({
+      [name]: value
+    })
+  };
+
+  handleLogin = (e) => {
+    e.preventDefault();
+    const { email, password } = this.state;
+    if (!email || !password) {
+      return
+    }
+    firebase.auth().signInWithEmailAndPassword(email, password).then(({user}) => {
+      const { email, uid} = user;
+      this.props.setLoggedIn(email, uid)
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      // const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage)
+    });
+  };
+
   render() {
+    if(this.props.currentUser.email) {
+      return <Redirect to='/projects' />
+    }
     return (
-      <Wrapper>
-        <LoginContainer>
+     <Wrapper>
+        <LoginContainer onSubmit={this.handleLogin}>
           <Title>Login</Title>
           <Label>Email</Label>
-          <Input type="text"/>
+          <Input
+                 type="text"
+                 name="email"
+                 placeholder="Email"
+                 value={this.state.email}
+                 onChange={this.handleInputChange}
+          />
           <Label>Password</Label>
-          <Input type="text"/>
+          <Input
+                 type="text"
+                 name="password"
+                 placeholder="Password"
+                 value={this.state.password}
+                 onChange={this.handleInputChange}
+          />
           <Button>LOGIN</Button>
+          <p>Dont have an account? <Link to="/signup">Sign-up</Link></p>
         </LoginContainer>
       </Wrapper>
     )
   }
 }
 
-export default Login
+Login.propTypes = {
+  setLoggedIn: PropTypes.func
+}
+
+const mapStateToProps = ({currentUser}) => ({
+  currentUser
+})
+
+export default connect(mapStateToProps, { setLoggedIn })(Login)
