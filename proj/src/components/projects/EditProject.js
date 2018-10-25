@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import uid from 'uuid/v4';
-import { Formik } from "formik";
+import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import * as projectActions from 'actions/projectsActions';
@@ -75,7 +75,6 @@ const ProjectSchema = yup.object().shape({
 const EditProject = (props) => {
   
   const submitProject = (values) => {
-    console.log('values: ', values);
     props.isLoading();
     if (props.currProject) {
       const editedProject = { ...props.currProject };
@@ -115,7 +114,6 @@ const EditProject = (props) => {
           }}
           validationSchema={ProjectSchema}
           onSubmit={values => {
-            console.log(values);
             submitProject(values)
           }}
           render={({
