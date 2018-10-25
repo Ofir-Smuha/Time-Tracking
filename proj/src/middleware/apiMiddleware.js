@@ -6,10 +6,10 @@ const dispatchActions  = (dispatch, arr, data) => {
 }
 
 const apiMiddleware = ({dispatch}) => next => action => {
-  if (!get('meta.type', action)) { 
+  if (!get('meta.type', action)) {
     return next(action);
   };
-  
+
   const { url, method = 'get' } = action.meta;
   const { onSuccess, onError} = action.payload
 
