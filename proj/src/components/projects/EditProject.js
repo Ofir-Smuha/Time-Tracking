@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import uuidv4 from 'uuid/v4';
 import PropTypes from 'prop-types';
+import uid from 'uuid/v4';
+import { Formik } from "formik";
+import * as yup from 'yup';
 
 import * as projectActions from 'actions/projectsActions';
 
@@ -14,7 +16,7 @@ const Backdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 const Modal = styled.div`
   position: relative;
   background-color: #fff;
@@ -23,19 +25,21 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   width: 200px;
-`
+`;
 
 const Title = styled.h1`
   font-weight: bold;
   margin-bottom: 1.3rem;
   margin-left: 0.5rem;
-`
+`;
+
+const Form = styled.form``
 
 const Label = styled.label`
   font-size: 0.8rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-`
+`;
 
 const Input = styled.input`
   width: 10rem;
@@ -43,7 +47,7 @@ const Input = styled.input`
   border-radius: 5px;
   border: 2px solid #EDEDED;
   margin-bottom: 1rem;
-`
+`;
 
 const Button = styled.button`
   width: 10rem;
@@ -54,71 +58,118 @@ const Button = styled.button`
   color: #fff;
   background-color: ${({theme}) => theme.main}
   cursor: pointer;
-`
+`;
 
 const CloseButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
-`
+`;
+
+const ProjectSchema = yup.object().shape({
+  owner: yup.string().required('Owner is required') ,
+  members: yup.number().min(2, 'Members must be at least 2 characters').required(),
+  project: yup.string().required('Project name is required')
+});
 
 const EditProject = (props) => {
   
-  const submitProject = (e) => {
-    e.preventDefault();
-    const inputValue = e.target.elements[0].value
+  const submitProject = (values) => {
+    console.log('values: ', values);
     props.isLoading();
-
-    if (props.currProject) { 
+    if (props.currProject) {
       const editedProject = { ...props.currProject };
-      editedProject.name = inputValue
+      editedProject.name = values.project;
       props.setEditedProject(editedProject)
     } else {
-      const newProjectId = uuidv4()
-      const newProject = {id: newProjectId, name: inputValue}
+      const newProjectId = uid();
+      const newProject = {id: newProjectId, name: values.project};
       props.setAddedProject(newProject)
     }
-  }
+  };
 
   const renderTitle = () => {
     if (props.currProject) {
       return <Title>{props.currProject.name}</Title>
     }
     return <Title>Add new project</Title>
-  }
+  };
 
-  const renderInput = () => {
+  const renderInput = (action) => {
     if (props.currProject) {
-      return <Input type="text" name="name" defaultValue={props.currProject.name}/>
+      return <Input type="text" name="project" onChange={action} defaultValue={props.currProject.name}/>
       }
-      return <Input type="text" name="name"/>
-  }
+      return <Input type="text" name="project" onChange={action}/>
+  };
 
   return (
     <Backdrop>
       <Modal>
         <CloseButton onClick={props.closeEditModal}>X</CloseButton>
         {renderTitle()}
-        <form onSubmit={submitProject}>
-          <Label>Project Label</Label>
-          {renderInput()}
-            <Button>SAVE</Button>
-        </form>
+      <Formik
+          initialValues={{
+            project: '',
+            owner: '',
+            members: ''
+          }}
+          validationSchema={ProjectSchema}
+          onSubmit={values => {
+            console.log(values);
+            submitProject(values)
+          }}
+          render={({
+                     errors,
+                     values,
+                     handleSubmit,
+                     handleChange,
+                     touched
+          }) => (
+            <Form onSubmit={handleSubmit}>
+              <Label>
+                Owner:
+                {touched.owner && errors.owner && <p>{errors.owner}</p>}
+                <Input
+                  type="text"
+                  name="owner"
+                  placeholder="Owner"
+                  onChange={handleChange}
+                />
+              </Label>
+              <Label>
+                Maximum members:
+                {touched.members && errors.members && <p>{errors.members}</p>}
+                <Input
+                  type="number"
+                  name="members"
+                  placeholder="Maximum members"
+                  onChange={handleChange}
+                />
+              </Label>
+              <Label>
+                Project Label:
+                {touched.project && errors.project && <p>{errors.project}</p>}
+                {renderInput(handleChange)}
+              </Label>
+              <Button type="submit">SAVE</Button>
+            </Form>
+          )}
+      />
       </Modal>
     </Backdrop>
   )
-}
+};
 
 EditProject.propTypes = {
   setEditedProject: PropTypes.func,
   setAddedProject: PropTypes.func,
   isLoading: PropTypes.func,
   closeEditModal: PropTypes.func
-}
+};
 
 const mapStateToProps = state => ({
   currProject: state.projects.currProject
-})
+});
 
 export default connect(mapStateToProps, {
   closeEditModal: projectActions.closeEditModal,
